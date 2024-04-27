@@ -14,7 +14,7 @@
   },
   "content_scripts": [
     {
-      "js": ["scripts/content.js"],
+      "js": ["scripts/index.js"],
       "all_frames": true,
       "matches": ["https://*/*"]
     }

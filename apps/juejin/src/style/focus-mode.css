@@ -1,0 +1,10 @@
+.article-area {
+  width: 100% !important;
+}
+
+.main-header-box,
+.article-suspended-panel,
+#sidebar-container,
+.global-component-box {
+  display: none !important;
+}
