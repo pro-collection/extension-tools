@@ -6,7 +6,7 @@ module.exports = {
   devtool: false,
   entry: {
     ["background/index"]: "./src/background/index.ts",
-    ["scripts/index"]: "./src/scripts/content.ts",
+    ["scripts/index"]: "./src/scripts/index.ts",
   },
   output: {
     filename: "[name].js",

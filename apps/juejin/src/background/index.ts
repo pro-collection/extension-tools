@@ -27,7 +27,7 @@ chrome.action.onClicked.addListener(async (tab) => {
   } else if (nextState === "OFF") {
     // 移除 css
     await chrome.scripting.removeCSS({
-      files: ["style/focus-mode.css"],
+      files: ["background/focus-mode.css"],
       target: { tabId: tab.id as number },
     });
   }

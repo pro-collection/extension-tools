@@ -1,10 +1,10 @@
 {
-  "ts-node": {
-    "transpileOnly": true,
-    "require": [
-      "tsconfig-paths/register"
-    ],
-  },
+  // "ts-node": {
+  //   "transpileOnly": true,
+  //   "require": [
+  //     "tsconfig-paths/register"
+  //   ],
+  // },
   "compilerOptions": {
     "target": "ES2020",
     "module": "ESNext",
@@ -18,9 +18,17 @@
       ]
     },
     "types": [
-      "./node_modules/chrome-types/index.d.ts",
-      "./globals.d.ts",
+      // "./node_modules//index.d.ts",
+      // "./node_modules/html-to-md/dist/index.d.ts",
+      "./types/globals.d.ts",
+      "chrome-types",
+      "html-to-md"
     ],
+    // "typeRoots": [
+    //   "./types",
+    //   "./node_modules/chrome-types",
+    //   "./node_modules/@types"
+    // ],
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
