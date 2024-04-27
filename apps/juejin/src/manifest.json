@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "Hello Extensions of the world",
+  "description": "hello world",
+  "version": "1.0",
+  "action": {
+    // "default_popup": "popup/hello.html",
+    "default_icon": "images/icon.png"
+  },
+  "icons": {
+    "16": "images/icon.png",
+    "32": "images/icon.png",
+    "48": "images/icon.png",
+    "128": "images/icon.png"
+  },
+  // "content_scripts": [
+  //   {
+  //     "js": ["scripts/content.js"],
+  //     "all_frames": true,
+  //     "matches": ["https://*/*"]
+  //   }
+  // ],
+  "background": {
+    "service_worker": "background/index.js",
+    "type": "module"
+  },
+  "permissions": ["activeTab", "scripting", "storage"]
+}

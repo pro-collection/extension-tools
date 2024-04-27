@@ -1,4 +1,5 @@
 const path = require("path");
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   mode: "development",
@@ -22,4 +23,12 @@ module.exports = {
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
   },
+  plugins: [
+    new CopyPlugin({
+      patterns: [
+        { from: "src/manifest.json", to: path.resolve(__dirname, "../dist") },
+        { from: path.resolve(__dirname, "../src/images"), to: path.resolve(__dirname, "../dist/images") },
+      ],
+    }),
+  ],
 };
