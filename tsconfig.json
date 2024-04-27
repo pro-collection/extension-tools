@@ -9,14 +9,14 @@
     "target": "es2020",
     "module": "ESNext",
     "baseUrl": "./",
-    "paths": {
-      "@utils/*": [
-        "utils/*"
-      ],
-      "@src/*": [
-        "src/*"
-      ]
-    },
+    // "paths": {
+    //   "@utils/*": [
+    //     "utils/*"
+    //   ],
+    //   "@src/*": [
+    //     "src/*"
+    //   ]
+    // },
     "types": [
       "./node_modules/chrome-types/index.d.ts",
       "./globals.d.ts",

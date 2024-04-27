@@ -23,6 +23,10 @@ module.exports = {
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
+    mainFiles: ["main", "index"], // 添加'main'作为一个默认解析的文件名
+    alias: {
+      "@src": path.resolve(__dirname, "../src/"),
+    },
   },
   plugins: [
     new CopyPlugin({

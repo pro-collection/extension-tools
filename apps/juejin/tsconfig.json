@@ -11,27 +11,23 @@
     "baseUrl": "./",
     "paths": {
       "@utils/*": [
-        "utils/*"
+        "./utils/*"
       ],
       "@src/*": [
         "src/*"
       ]
     },
     "types": [
-      // "./node_modules//index.d.ts",
-      // "./node_modules/html-to-md/dist/index.d.ts",
       "./types/globals.d.ts",
       "chrome-types",
       "html-to-md"
     ],
-    // "typeRoots": [
-    //   "./types",
-    //   "./node_modules/chrome-types",
-    //   "./node_modules/@types"
-    // ],
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
   },
+  "include": [
+    "src/**/*"
+  ] // 决定哪些文件被 TypeScript 服务包含
 }
