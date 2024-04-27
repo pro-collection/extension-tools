@@ -7,6 +7,7 @@ chrome.runtime.onInstalled.addListener((tab) => {
 });
 
 // 点击插件图标
+// ！！这个 api 和 popup 是冲突的；
 chrome.action.onClicked.addListener(async (tab) => {
   const prevState = await chrome.action.getBadgeText({ tabId: tab.id });
   const nextState = prevState === "ON" ? "OFF" : "ON";
