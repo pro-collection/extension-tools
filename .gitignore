@@ -31,3 +31,6 @@ package-lock.json
 
 configToken.json
 authConfigToken.ts
+
+
+src/*.js
