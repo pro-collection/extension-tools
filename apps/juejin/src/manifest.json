@@ -1,10 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "Hello Extensions of the world",
-  "description": "hello world",
+  "name": "juejin tools",
+  "description": "juejin 工具库扩展程序",
   "version": "1.0",
   "action": {
-    // "default_popup": "popup/hello.html",
     "default_icon": "images/icon.png"
   },
   "icons": {
@@ -13,13 +12,13 @@
     "48": "images/icon.png",
     "128": "images/icon.png"
   },
-  // "content_scripts": [
-  //   {
-  //     "js": ["scripts/content.js"],
-  //     "all_frames": true,
-  //     "matches": ["https://*/*"]
-  //   }
-  // ],
+  "content_scripts": [
+    {
+      "js": ["scripts/content.js"],
+      "all_frames": true,
+      "matches": ["https://*/*"]
+    }
+  ],
   "background": {
     "service_worker": "background/index.js",
     "type": "module"

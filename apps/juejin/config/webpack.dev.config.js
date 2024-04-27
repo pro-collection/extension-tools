@@ -6,6 +6,7 @@ module.exports = {
   devtool: false,
   entry: {
     ["background/index"]: "./src/background/index.ts",
+    ["scripts/index"]: "./src/scripts/content.ts",
   },
   output: {
     filename: "[name].js",
@@ -31,4 +32,7 @@ module.exports = {
       ],
     }),
   ],
+  output: {
+    clean: true, // 在生成文件之前清空 output 目录
+  },
 };
