@@ -37,7 +37,8 @@ if (content) {
 
 `;
   markdown = desc + markdown;
-  console.log(`[yanle] - markdown\n`, markdown);
+
+  console.log(markdown);
 } else {
   console.log(`[yanle] - 没有 content`);
 }

@@ -1,6 +1,5 @@
 // chrome.runtime.onInstalled 扩展程序加载的时候
 chrome.runtime.onInstalled.addListener((tab) => {
-  console.log(`[yanle] - tab`, tab);
   // 设置扩展程序徽标， 没有实际的功能性能理
   chrome.action.setBadgeText({
     text: "OFF",
