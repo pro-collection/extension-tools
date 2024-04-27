@@ -1,0 +1,29 @@
+{
+  "ts-node": {
+    "transpileOnly": true,
+    "require": [
+      "tsconfig-paths/register"
+    ],
+  },
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "commonjs",
+    "baseUrl": "./",
+    "paths": {
+      "@utils/*": [
+        "utils/*"
+      ],
+      "@src/*": [
+        "src/*"
+      ]
+    },
+    "types": [
+      "./node_modules/chrome-types/index.d.ts",
+      "./globals.d.ts",
+    ],
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true
+  },
+}

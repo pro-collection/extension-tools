@@ -1,16 +1,28 @@
 lockfileVersion: 5.4
 
-specifiers:
-  chrome-types: ^0.1.281
-  typescript: ^5.4.5
-  typescript-transform-paths: ^3.4.7
+importers:
 
-dependencies:
-  typescript: 5.4.5
-  typescript-transform-paths: 3.4.7_typescript@5.4.5
+  .:
+    specifiers:
+      chrome-types: ^0.1.281
+      typescript: ^5.4.5
+      typescript-transform-paths: ^3.4.7
+    dependencies:
+      typescript: 5.4.5
+      typescript-transform-paths: 3.4.7_typescript@5.4.5
+    devDependencies:
+      chrome-types: 0.1.282
 
-devDependencies:
-  chrome-types: 0.1.282
+  apps/juejin:
+    specifiers:
+      chrome-types: ^0.1.281
+      typescript: ^5.4.5
+      typescript-transform-paths: ^3.4.7
+    dependencies:
+      typescript: 5.4.5
+      typescript-transform-paths: 3.4.7_typescript@5.4.5
+    devDependencies:
+      chrome-types: 0.1.282
 
 packages:
 
