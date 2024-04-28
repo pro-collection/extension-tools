@@ -57,6 +57,7 @@ module.exports = {
                       "nesting-rules": true,
                     },
                   }),
+                  require("tailwindcss"),
                 ],
               },
             },

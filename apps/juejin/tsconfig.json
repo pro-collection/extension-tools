@@ -29,6 +29,7 @@
     "jsx": "react"
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "config/tailwind.config.js"
   ] // 决定哪些文件被 TypeScript 服务包含
 }
