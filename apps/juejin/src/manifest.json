@@ -24,5 +24,5 @@
     "service_worker": "background/index.js",
     "type": "module"
   },
-  "permissions": ["activeTab", "scripting", "storage", "clipboardWrite"]
+  "permissions": ["activeTab", "scripting", "storage", "clipboardWrite", "tabs", "runtime", "<all_urls>"]
 }
