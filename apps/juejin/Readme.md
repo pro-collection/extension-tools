@@ -9,7 +9,8 @@
 
 1. 支持 TypeScript 编写 `content script、background`
 2. 支持 TypeScript + React 编写 popup 界面
-3. webpack 工程化
+3. 支持 antd + tailwindcss
+4. webpack 工程化
 
 ## 构建
 
