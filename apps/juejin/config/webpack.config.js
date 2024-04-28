@@ -3,8 +3,10 @@ const CopyPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
+const env = process.env.NODE_ENV;
+
 module.exports = {
-  mode: "development",
+  mode: env || "development",
   devtool: false,
   entry: {
     ["background/index"]: "./src/background/index.ts",
