@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "antd": "^5.16.4",
     "html-to-md": "^0.8.5",
     "lodash": "^4.17.21",
     "react": "^18.3.1",

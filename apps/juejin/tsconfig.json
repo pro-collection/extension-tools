@@ -6,8 +6,9 @@
   //   ],
   // },
   "compilerOptions": {
+    // "moduleResolution": "NodeNext",
     "target": "ES2020",
-    "module": "ESNext",
+    "module": "NodeNext",
     "baseUrl": "./",
     "paths": {
       "@utils/*": [
@@ -20,13 +21,14 @@
     "types": [
       "./types/globals.d.ts",
       "chrome-types",
-      "html-to-md"
+      "html-to-md",
+      "antd"
     ],
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    "jsx": "react"
+    "jsx": "react",
   },
   "include": [
     "src/**/*",
