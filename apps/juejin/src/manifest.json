@@ -4,7 +4,8 @@
   "description": "juejin 工具库扩展程序",
   "version": "1.0",
   "action": {
-    "default_icon": "images/icon.png"
+    "default_icon": "images/icon.png",
+    "default_popup": "popup/index.html"
   },
   "icons": {
     "16": "images/icon.png",
