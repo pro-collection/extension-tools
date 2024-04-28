@@ -5,3 +5,4 @@ declare interface Window {
 }
 
 declare module "html-to-md";
+declare module "*.png";
