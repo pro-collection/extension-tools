@@ -33,5 +33,6 @@
   "include": [
     "src/**/*",
     "config/tailwind.config.js"
-  ] // 决定哪些文件被 TypeScript 服务包含
+  ], // 决定哪些文件被 TypeScript 服务包含
+  "allowImportingTsExtensions": true,
 }

@@ -3,6 +3,11 @@ import { flow } from "lodash";
 
 const $article = document.getElementById("article-root");
 
+// 这个操作是没有用的
+if ($article?.style?.display) {
+  $article.style.display = "none";
+}
+
 const content = $article?.innerHTML;
 if (content) {
   let markdown = h2md(content);
@@ -39,6 +44,8 @@ if (content) {
   markdown = desc + markdown;
 
   console.log(markdown);
+
+  chrome.runtime.sendMessage("");
 } else {
   console.log(`[yanle] - 没有 content`);
 }

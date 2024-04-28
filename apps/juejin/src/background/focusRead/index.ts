@@ -35,9 +35,7 @@
 
 // console.log(`[yanle] - background`);
 
-chrome.runtime.onMessage.addListener((request, sender) => {
-  console.log(`[yanle] -  reqeust: `, request);
-  console.log(`[yanle] - sender`, sender);
+chrome.runtime.onMessage.addListener((request) => {
   const { action, tabId } = request;
   const runner = async () => {
     if (action === "inject") {
