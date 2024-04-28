@@ -24,5 +24,6 @@
     "service_worker": "background/index.js",
     "type": "module"
   },
+  "host_permissions": ["http://*/*", "https://*/*"],
   "permissions": ["activeTab", "scripting", "storage", "clipboardWrite", "tabs", "runtime"]
 }

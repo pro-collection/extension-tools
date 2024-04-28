@@ -1,4 +1,4 @@
-import { ActionType, ExtensionId } from "@src/consts";
+import { Action, ActionType, ExtensionId } from "@src/consts";
 
 /**
  * 开关
@@ -13,14 +13,14 @@ const handleSwitch = async (checked: boolean) => {
     // 插入 css
     // 没有直接插入 css 的权限， 只能通知 service worker 去操作
     await chrome.runtime.sendMessage(ExtensionId, {
-      action: "inject",
+      action: Action.injectCSS,
       tabId: currentTabId,
       actionType: ActionType.popup2background.injectCSS,
     });
   } else {
     // 移除 css
     await chrome.runtime.sendMessage(ExtensionId, {
-      action: "remove",
+      action: Action.injectCSS,
       tabId: currentTabId,
       actionType: ActionType.popup2background.injectCSS,
     });
