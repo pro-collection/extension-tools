@@ -1,8 +1,10 @@
 import { Button, List, Switch } from "antd";
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { CopyOutlined } from "@ant-design/icons";
 import hanldeClickCopy from "./helper/handleClickCopy";
 import handleSwitch from "./helper/handleSwitch";
+import { StorageKey } from "@src/consts";
+import SwitchComponent from "./SwitchComponent";
 
 const ListCompoennts: FC = () => {
   return (
@@ -12,9 +14,7 @@ const ListCompoennts: FC = () => {
         dataSource={[
           {
             label: "是否开启阅读模式",
-            actions: [
-              <Switch onChange={handleSwitch} checkedChildren="开启" unCheckedChildren="关闭" defaultChecked />,
-            ],
+            actions: [<SwitchComponent />],
           },
           {
             label: "点击复制当前页面文章为 Markdown 文本格式",

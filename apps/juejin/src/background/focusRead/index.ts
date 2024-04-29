@@ -1,56 +1,28 @@
-// // chrome.runtime.onInstalled 扩展程序加载的时候
-// chrome.runtime.onInstalled.addListener((tab) => {
-//   // 设置扩展程序徽标， 没有实际的功能性能理
-//   chrome.action.setBadgeText({
-//     text: "OFF",
-//   });
-// });
-
-import { Action, AssetPaths, InjectCssStatusList, Pages } from "@src/consts";
+import { Action, AssetPaths, InjectCssStatusList, Pages, StorageKey } from "@src/consts";
 import { includes } from "lodash";
 
-// // 点击插件图标
-// // ！！这个 api 和 popup 是冲突的；
-// chrome.action.onClicked.addListener(async (tab) => {
-//   const prevState = await chrome.action.getBadgeText({ tabId: tab.id });
-//   const nextState = prevState === "ON" ? "OFF" : "ON";
-
-//   // 切换徽标描述文本
-//   await chrome.action.setBadgeText({
-//     tabId: tab.id,
-//     text: nextState,
+/**
+ * 首先预先存储一个用于表示是否全品阅读掘金
+ */
+// chrome.runtime.onInstalled.addListener(() => {
+//   chrome.storage.local.set({
+//     [StorageKey.focusReadStatus]: false,
 //   });
-
-//   if (nextState === "ON") {
-//     // 插入 css
-//     await chrome.scripting.insertCSS({
-//       files: [AssetPaths.focusModeCSS],
-//       target: { tabId: tab.id as number },
-//     });
-//   } else if (nextState === "OFF") {
-//     // 移除 css
-//     await chrome.scripting.removeCSS({
-//       files: [AssetPaths.focusModeCSS],
-//       target: { tabId: tab.id as number },
-//     });
-//   }
 // });
-
-// console.log(`[yanle] - background`);
 
 /**
  * 监听页签
  * 如果是新开启的以前，那么直接判定即可
+ *
+ * 标签初始化
+ *
+ * 关键问题在于
  */
-chrome.tabs.onUpdated.addListener((tabId: number, changeInfo: object, tab: chrome.tabs.Tab) => {
-  console.log(`[yanle] - tabId`, tabId);
-  console.log(`[yanle] - changeInfo`, changeInfo);
-  console.log(`[yanle] - tab`, tab);
+chrome.tabs.onUpdated.addListener(async (tabId: number, changeInfo: object, tab: chrome.tabs.Tab) => {
+  if (includes(tab.url, Pages.host) && InjectCssStatusList.includes(tab?.status as string)) {
+    const { focusReadStatus } = await chrome.storage.local.get(StorageKey.focusReadStatus);
 
-  // const status: chrome.tabs.TabStatus = "complete";
-
-  if (includes(tab.url, Pages.host)) {
-    if (InjectCssStatusList.includes(tab?.status as string)) {
+    if (focusReadStatus) {
       chrome.scripting.insertCSS({
         files: [AssetPaths.focusModeCSS],
         target: { tabId },
@@ -64,15 +36,20 @@ chrome.tabs.onUpdated.addListener((tabId: number, changeInfo: object, tab: chrom
   }
 });
 
+/**
+ * 从 oppup 页面传递过来的时间
+ */
 chrome.runtime.onMessage.addListener((request) => {
   const { action, tabId } = request;
   const runner = () => {
     if (action === Action.injectCSS) {
+      chrome.storage.local.set({ [StorageKey.focusReadStatus]: true });
       chrome.scripting.insertCSS({
         files: [AssetPaths.focusModeCSS],
         target: { tabId },
       });
     } else if (action === Action.removeCSS) {
+      chrome.storage.local.set({ [StorageKey.focusReadStatus]: false });
       chrome.scripting.removeCSS({
         files: [AssetPaths.focusModeCSS],
         target: { tabId },
