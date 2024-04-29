@@ -25,5 +25,5 @@
     "type": "module"
   },
   "host_permissions": ["http://*/*", "https://*/*"],
-  "permissions": ["activeTab", "scripting", "storage", "clipboardWrite", "tabs"]
+  "permissions": ["activeTab", "scripting", "storage", "clipboardWrite", "tabs", "userScripts"]
 }

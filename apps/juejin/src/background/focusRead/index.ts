@@ -1,14 +1,11 @@
-import { Action, AssetPaths, InjectCssStatusList, Pages, StorageKey } from "@src/consts";
-import { forEach, get, includes, map } from "lodash";
+import { Action, ActionType, AssetPaths, InjectCssStatusList, Pages, StorageKey } from "@src/consts";
+import { filter, forEach, get, includes, isEmpty, map } from "lodash";
 
-/**
- * 首先预先存储一个用于表示是否全品阅读掘金
- */
-// chrome.runtime.onInstalled.addListener(() => {
-//   chrome.storage.local.set({
-//     [StorageKey.focusReadStatus]: false,
-//   });
-// });
+const getPostTabs = async () => {
+  const tabs = await chrome.tabs.query({});
+  console.log(`[yanle] - tabs`, tabs);
+  return filter(tabs, (item) => includes(item.url, Pages.post));
+};
 
 /**
  * 监听页签
@@ -16,104 +13,97 @@ import { forEach, get, includes, map } from "lodash";
  *
  * 标签初始化
  *
- * 关键问题在于
+ * 存在的问题： 如果当前是阅读模式， 刷新页面之后， 确实是大家都在阅读模式
+ * 但是关闭阅读模式的时候， 非多动页签没有办法取消阅读模式.
+ * 原因： 因为 css 可以多从叠加， 如果多次叠加了之后，移除也需要多次移除才行。
  */
-chrome.tabs.onUpdated.addListener(async (tabId: number, changeInfo: object, tab: chrome.tabs.Tab) => {
-  const tabs = await chrome.tabs.query({});
+export const readUpdater = async (tabId: number, changeInfo: object, tab: chrome.tabs.Tab) => {
   const { focusReadStatus } = await chrome.storage.local.get(StorageKey.focusReadStatus);
+
+  if (tab?.status !== "complete") {
+    return;
+  }
 
   const list: Promise<any>[] = [];
 
-  forEach(tabs, (item) => {
-    const url = get(item, "url", "");
-    const tabId = get(item, "id", -1);
-    if (includes(url, Pages.post)) {
-      if (focusReadStatus) {
-        console.log(`[yanle] - init insert css`, tabId);
+  const tabs = await getPostTabs();
 
-        list.push(
-          chrome.scripting.insertCSS({
-            files: [AssetPaths.focusModeCSS],
-            target: { tabId },
-          })
-        );
-      } else {
-        console.log(`[yanle] - init remove css`, tabId);
-        list.push(
-          chrome.scripting.removeCSS({
-            files: [AssetPaths.focusModeCSS],
-            target: { tabId },
-          })
-        );
-      }
+  forEach(tabs, (item) => {
+    const tabId = get(item, "id", -1);
+    if (focusReadStatus) {
+      console.log(`[yanle] - init insert css`, tabId);
+
+      list.push(
+        chrome.scripting.insertCSS({
+          files: [AssetPaths.focusModeCSS],
+          target: { tabId },
+        })
+      );
+    } else {
+      console.log(`[yanle] - init remove css`, tabId);
+
+      list.push(
+        chrome.scripting.removeCSS({
+          files: [AssetPaths.focusModeCSS],
+          target: { tabId },
+        })
+      );
     }
   });
 
   Promise.all(list);
 
-  console.log(`[yanle] - tabs`, tabs);
+  // const scripts = await chrome.scripting.getRegisteredContentScripts();
 
-  // if (includes(tab.url, Pages.post) && InjectCssStatusList.includes(tab?.status as string)) {
-  //   if (focusReadStatus) {
-  //     chrome.scripting.insertCSS({
-  //       files: [AssetPaths.focusModeCSS],
-  //       target: { tabId },
-  //     });
-  //   } else {
-  //     chrome.scripting.removeCSS({
-  //       files: [AssetPaths.focusModeCSS],
-  //       target: { tabId },
-  //     });
-  //   }
+  // console.log(`[yanle] - focusReadStatus`, focusReadStatus);
+  // console.log(`[yanle] - isempty`, isEmpty(scripts));
+
+  // if (focusReadStatus && isEmpty(scripts)) {
+  //   await chrome.scripting.registerContentScripts([
+  //     {
+  //       id: ActionType.popup2background.injectCSS,
+  //       css: [AssetPaths.focusModeCSS],
+  //       matches: ["https://juejin.cn/post/*"],
+  //       // allFrames: true, // 指定脚本是否应在所有框架中运行
+  //       persistAcrossSessions: false,
+  //       runAt: "document_start",
+  //     },
+  //   ]);
   // }
 
-  // const;
-});
+  // console.log(`[yanle] - scripts`, scripts);
+};
 
 /**
  * 从 oppup 页面传递过来的事件
- * 也能接受来自于 content script 的事件
  */
-chrome.runtime.onMessage.addListener((request) => {
-  const { action, actionType } = request;
+export const readRunner = async (action: Action) => {
+  const tabs = await getPostTabs();
 
-  const runner = async () => {
-    const tabs = await chrome.tabs.query({});
+  const list: Promise<any>[] = [];
 
-    const list: Promise<any>[] = [];
+  console.log(`[yanle] - readRunner tabs`, tabs);
 
-    forEach(tabs, (item) => {
-      if (includes(item.url, Pages.post)) {
-        if (action === Action.injectCSS) {
-          console.log(`[yanle] - inject`, item?.id);
-          list.push(
-            chrome.scripting.insertCSS({
-              files: [AssetPaths.focusModeCSS],
-              target: { tabId: item.id as number },
-            })
-          );
-        } else {
-          console.log(`[yanle] - remove`, item?.id);
-          list.push(
-            chrome.scripting.removeCSS({
-              files: [AssetPaths.focusModeCSS],
-              target: { tabId: item.id as number },
-            })
-          );
-        }
-      }
-    });
-
+  forEach(tabs, (item) => {
     if (action === Action.injectCSS) {
-      chrome.storage.local.set({ [StorageKey.focusReadStatus]: true });
-    } else if (action === Action.removeCSS) {
-      chrome.storage.local.set({ [StorageKey.focusReadStatus]: false });
+      console.log(`[yanle] - inject`, item?.id);
+      list.push(
+        chrome.scripting.insertCSS({
+          files: [AssetPaths.focusModeCSS],
+          target: { tabId: item.id as number },
+        })
+      );
+    } else {
+      console.log(`[yanle] - remove`, item?.id);
+      list.push(
+        chrome.scripting.removeCSS({
+          files: [AssetPaths.focusModeCSS],
+          target: { tabId: item.id as number },
+        })
+      );
     }
+  });
 
-    Promise.all(list);
-  };
-
-  runner();
-
-  return true;
-});
+  chrome.storage.local.set({ [StorageKey.focusReadStatus]: action === Action.injectCSS });
+  Promise.all(list);
+};
