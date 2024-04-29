@@ -45,7 +45,7 @@ if (content) {
 
   console.log(markdown);
 
-  chrome.runtime.sendMessage("");
+  // chrome.runtime.sendMessage("");
 } else {
   console.log(`[yanle] - 没有 content`);
 }

@@ -6,9 +6,9 @@ import handleSwitch from "../helper/handleSwitch";
 const SwitchComponent: FC = () => {
   const [checked, setChecked] = useState(false);
 
-  const handleOnChange = (value: boolean) => {
-    handleSwitch(value, setChecked);
-  };
+  // const handleOnChange = (value: boolean) => {
+  //   handleSwitch(value, setChecked);
+  // };
 
   useEffect(() => {
     chrome.storage.local.get(StorageKey.focusReadStatus).then((res) => {
@@ -19,7 +19,7 @@ const SwitchComponent: FC = () => {
 
   return (
     <Switch
-      onChange={(value) => handleOnChange(value)}
+      // onChange={(value) => handleOnChange(value)}
       checkedChildren="开启"
       unCheckedChildren="关闭"
       checked={checked}
