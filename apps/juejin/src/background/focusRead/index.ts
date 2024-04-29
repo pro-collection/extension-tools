@@ -24,54 +24,12 @@ export const readUpdater = async (tabId: number, changeInfo: object, tab: chrome
     return;
   }
 
-  const list: Promise<any>[] = [];
-
-  const tabs = await getPostTabs();
-
-  forEach(tabs, (item) => {
-    const tabId = get(item, "id", -1);
-    if (focusReadStatus) {
-      console.log(`[yanle] - init insert css`, tabId);
-
-      list.push(
-        chrome.scripting.insertCSS({
-          files: [AssetPaths.focusModeCSS],
-          target: { tabId },
-        })
-      );
-    } else {
-      console.log(`[yanle] - init remove css`, tabId);
-
-      list.push(
-        chrome.scripting.removeCSS({
-          files: [AssetPaths.focusModeCSS],
-          target: { tabId },
-        })
-      );
-    }
-  });
-
-  Promise.all(list);
-
-  // const scripts = await chrome.scripting.getRegisteredContentScripts();
-
-  // console.log(`[yanle] - focusReadStatus`, focusReadStatus);
-  // console.log(`[yanle] - isempty`, isEmpty(scripts));
-
-  // if (focusReadStatus && isEmpty(scripts)) {
-  //   await chrome.scripting.registerContentScripts([
-  //     {
-  //       id: ActionType.popup2background.injectCSS,
-  //       css: [AssetPaths.focusModeCSS],
-  //       matches: ["https://juejin.cn/post/*"],
-  //       // allFrames: true, // 指定脚本是否应在所有框架中运行
-  //       persistAcrossSessions: false,
-  //       runAt: "document_start",
-  //     },
-  //   ]);
-  // }
-
-  // console.log(`[yanle] - scripts`, scripts);
+  if (focusReadStatus) {
+    chrome.scripting.insertCSS({
+      files: [AssetPaths.focusModeCSS],
+      target: { tabId },
+    });
+  }
 };
 
 /**

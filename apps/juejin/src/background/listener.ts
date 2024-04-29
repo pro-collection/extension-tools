@@ -20,7 +20,7 @@ export const handleRuntimeListener = (request: any) => {
       break;
   }
 
-  return true;
+  return undefined;
 };
 
 /**
