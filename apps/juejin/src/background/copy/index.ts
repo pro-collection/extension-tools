@@ -33,6 +33,9 @@ const copyRunner = async () => {
       (value) => value.replace(/shellCopy code/gi, ""),
       (value) => value.replace(/jsxCopy code/gi, ""),
       (value) => value.replace(/```js\njs/gi, "```js\n"),
+      (value) => value.replace(/```json\njson/gi, "```json\n"),
+      (value) => value.replace(/```html\nhtml/gi, "```html\n"),
+      (value) => value.replace(/```csharp\ncsharp/gi, "```csharp\n"),
       (value) => value.replace(/```javascript\njs/gi, "```javascript\n"),
       (value) => value.replace(/```typescript\ntypescript/gi, "```typescript\n"),
       (value) => value.replace(/\\. /gi, ". "),
@@ -42,10 +45,10 @@ const copyRunner = async () => {
       (value) => value.replace(/\n## /gi, "\n### ")
     )(content);
 
-    const desc = `> 作者：${author}
-> 链接：${href}
-> 来源：稀土掘金
-> 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+    const desc = `> 作者：${author}               
+> 链接：${href}             
+> 来源：稀土掘金                  
+> 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。                    
 
 ---------
 
