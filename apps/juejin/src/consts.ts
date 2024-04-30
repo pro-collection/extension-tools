@@ -9,6 +9,7 @@ export const ActionType = {
   popup2background: {
     injectCSS: "popup2background - injectCSS - focus-mode.css", // 注入 css 脚本
   },
+  content2pupup: {},
 };
 
 /**
@@ -46,4 +47,5 @@ export const Pages = {
  */
 export const AssetPaths = {
   focusModeCSS: "style/focus-mode.css",
+  copyArticle: "contents/index.js",
 };

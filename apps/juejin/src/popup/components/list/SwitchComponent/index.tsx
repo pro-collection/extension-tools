@@ -12,6 +12,11 @@ const SwitchComponent: FC = () => {
     chrome.storage.local.get(StorageKey.focusReadStatus).then((res) => {
       setChecked(res?.focusReadStatus);
     });
+
+    chrome.runtime.onMessage.addListener((query) => {
+      console.log(`[yanle] - query`, query);
+      return undefined;
+    });
   }, []);
 
   return (

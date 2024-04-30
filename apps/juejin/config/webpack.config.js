@@ -10,8 +10,10 @@ module.exports = {
   devtool: false,
   entry: {
     ["background/index"]: "./src/background/index.ts",
-    ["scripts/index"]: "./src/scripts/index.ts",
     ["popup/index"]: "./src/popup/index.tsx",
+
+    // 内容脚本
+    ["contents/index"]: "./src/contents/index.ts",
   },
   output: {
     filename: "[name].js",

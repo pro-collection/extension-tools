@@ -1,7 +1,7 @@
 const hanldeClickCopy = () => {
   // 插入脚本到 content scripts 让 content scirpts 读取 dom 节点然后返回
 
-  console.log(`[yanle] - navigator.clipboard`, navigator.clipboard);
+  //
 
   // 测试复制内容， 完美可用
   navigator.clipboard

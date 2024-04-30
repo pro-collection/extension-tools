@@ -8,7 +8,6 @@ import { ActionType } from "@src/consts";
  */
 export const handleRuntimeListener = (request: any) => {
   const { action, actionType } = request || {};
-
   console.log(`[yanle] - request`, request);
 
   // 事件分发
