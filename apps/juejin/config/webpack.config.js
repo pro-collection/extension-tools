@@ -13,7 +13,8 @@ module.exports = {
     ["popup/index"]: "./src/popup/index.tsx",
 
     // 内容脚本
-    ["contents/index"]: "./src/contents/index.ts",
+    // 动态注入 内容脚本， 不需要静态注入， 没有意义。
+    // ["contents/index"]: "./src/contents/index.ts",
   },
   output: {
     filename: "[name].js",

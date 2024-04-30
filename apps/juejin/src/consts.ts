@@ -8,6 +8,9 @@ export const ActionType = {
   common: {},
   popup2background: {
     injectCSS: "popup2background - injectCSS - focus-mode.css", // 注入 css 脚本
+
+    // 复制文件
+    copy: "content2pupup - injectContentScripts - content.index.js",
   },
   content2pupup: {},
 };

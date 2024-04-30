@@ -1,10 +1,11 @@
-import { Button, List, Switch } from "antd";
+import { Button, List, Switch, notification } from "antd";
 import React, { FC, useEffect, useState } from "react";
 import { CopyOutlined } from "@ant-design/icons";
 import hanldeClickCopy from "./helper/handleClickCopy";
 import handleSwitch from "./helper/handleSwitch";
 import { StorageKey } from "@src/consts";
 import SwitchComponent from "./SwitchComponent";
+import CopyButtonComponent from "./CopyButtonComponent";
 
 const ListCompoennts: FC = () => {
   return (
@@ -18,11 +19,7 @@ const ListCompoennts: FC = () => {
           },
           {
             label: "点击复制当前页面文章为 Markdown 文本格式",
-            actions: [
-              <Button onClick={hanldeClickCopy} type="primary" shape="round" icon={<CopyOutlined />}>
-                复制到粘贴板
-              </Button>,
-            ],
+            actions: [<CopyButtonComponent />],
           },
         ]}
         renderItem={(item) => <List.Item actions={item.actions}>{item.label}</List.Item>}

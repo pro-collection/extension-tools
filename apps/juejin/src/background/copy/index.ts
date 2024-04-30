@@ -1,18 +1,27 @@
-import { ExtensionId } from "@src/consts";
-import h2md from "html-to-md";
+import contentCopy from "@src/content/contentCopy";
 import { flow } from "lodash";
+import h2md from "html-to-md";
 
-const contentScript = async () => {
-  const $article = document.getElementById("article-root");
+const copyRunner = async () => {
+  // 注入 content script , 获取 复制的文本， 然后将这个文本 给 popup
+  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
-  // 这个操作是没有用的
-  if ($article?.style?.display) {
-    $article.style.display = "none";
+  if (!tab) {
+    return "";
   }
 
-  const content = $article?.innerHTML;
-  if (content) {
-    let markdown = h2md(content);
+  const [{ result }] = await chrome.scripting.executeScript({
+    target: { tabId: tab?.id as number },
+    func: contentCopy,
+    injectImmediately: true,
+  });
+
+  const { articleContent, author, href } = result || {};
+
+  let markdown = "";
+
+  if (articleContent) {
+    const content = h2md(articleContent);
 
     // 写入文件
     markdown = flow(
@@ -31,12 +40,10 @@ const contentScript = async () => {
       (value) => value.replace(/复制代码/gi, ""),
       // value => value.replace(/\n### /gi, "\n#### "),
       (value) => value.replace(/\n## /gi, "\n### ")
-    )(markdown);
-
-    const author = document.querySelector<HTMLElement>(".author-info-box span.name")?.innerText as string;
+    )(content);
 
     const desc = `> 作者：${author}
-> 链接：${window.location.href}
+> 链接：${href}
 > 来源：稀土掘金
 > 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 
@@ -44,11 +51,9 @@ const contentScript = async () => {
 
 `;
     markdown = desc + markdown;
-
-    return markdown;
-  } else {
-    return "";
   }
+
+  return markdown;
 };
 
-export default contentScript;
+export default copyRunner;
