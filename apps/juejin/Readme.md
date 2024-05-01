@@ -21,3 +21,10 @@ pnpm dev
 // 构建模式
 pnpm prod
 ```
+
+## 使用插件
+
+nepbnjgiiihmemlfldbncfelglceibnh
+dnamhnghmpbdglgnphnoadeemledjmpi
+dnamhnghmpbdglgnphnoadeemledjmpi
+nepbnjgiiihmemlfldbncfelglceibnh

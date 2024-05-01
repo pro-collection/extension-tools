@@ -1,4 +1,4 @@
-import { ActionType, ExtensionId } from "@src/consts";
+import { ActionType } from "@src/consts";
 import { MessageInstance } from "antd/es/message/interface";
 
 const hanldeClickCopy = (api: MessageInstance) => async () => {
