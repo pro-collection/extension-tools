@@ -24,7 +24,23 @@ pnpm prod
 
 ## 使用插件
 
-nepbnjgiiihmemlfldbncfelglceibnh
-dnamhnghmpbdglgnphnoadeemledjmpi
-dnamhnghmpbdglgnphnoadeemledjmpi
-nepbnjgiiihmemlfldbncfelglceibnh
+按照以下步骤来即可
+
+1. 访问代码源码
+
+- https://github.com/pro-collection/extension-tools/tree/master/apps/juejin
+
+2. 下载代码
+3. 导入 crx 文件 或者 直接导入编译后的产物代码
+
+3.1. 访问 chrome://extensions/ ， 然后开启开发者模式
+![image.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/072637288fb24101b2379d0fccd046bb~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2928&h=490&s=105918&e=png&b=ffffff)
+
+3.2 直接将 crx 拖拽到扩展程序面板即可。
+
+**备选: 导入编译后的产物代码**
+
+下载本仓库的项目， 然后进入到 `apps/juejin` 目录下面, 直接运行 `pnpm prod` ；
+
+然后回得到 dist 的一个产物目录， 将产物目录导入到浏览器扩展程序页面即可（【添加已解压的扩展程序】）。  
+![image.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b68bdb1ddfd64df0bc1955f0dfb42db2~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2936&h=472&s=101093&e=png&b=ffffff)
