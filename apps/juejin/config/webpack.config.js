@@ -2,6 +2,8 @@ const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const FileManagerPlugin = require("filemanager-webpack-plugin");
+const { compact } = require("lodash");
 
 const env = process.env.NODE_ENV;
 
@@ -119,7 +121,7 @@ module.exports = {
       "@src": path.resolve(__dirname, "../src/"),
     },
   },
-  plugins: [
+  plugins: compact([
     new CopyPlugin({
       patterns: [
         { from: "src/manifest.json", to: path.resolve(__dirname, "../dist") },
@@ -135,7 +137,22 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "style/[hash:8].css", // 将css单独提测出来放在assets/css 下
     }),
-  ],
+    env === "production" &&
+      new FileManagerPlugin({
+        // 注意！记得这里需要加一层events节点，否则会报错噢，宝
+        events: {
+          onEnd: {
+            delete: ["./dist.zip"],
+            archive: [
+              {
+                source: "./dist",
+                destination: "./dist.zip",
+              },
+            ],
+          },
+        },
+      }),
+  ]),
   output: {
     clean: true, // 在生成文件之前清空 output 目录
   },
