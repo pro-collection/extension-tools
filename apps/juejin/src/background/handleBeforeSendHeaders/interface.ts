@@ -84,14 +84,12 @@ export type Response = chrome.webRequest.BlockingResponse | undefined;
  */
 export type HandleBeforeSendHeaders = (options: HandleBeforeSendHeadersOptions) => Response;
 
-type Handler = (options: HandleBeforeSendHeadersOptions) => void;
-
 /**
  * 单个拦截的场景
  */
 export interface InterceptModifyHeaderItem {
-  ulrPrefix: string;
+  urlPrefix: string;
   headers: Record<string, string>;
   inspectUrls: string[];
-  handler: Noop | Handler;
+  handler?: HandleBeforeSendHeaders;
 }

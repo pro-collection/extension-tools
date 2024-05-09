@@ -1,13 +1,14 @@
 import { noop } from "lodash";
+import { InterceptModifyHeaderItem } from "./interface";
 
 /**
  * 拦截需要修改的 url 场景
  */
-export const interceptModifyHeaders = [
+export const interceptModifyHeaders: InterceptModifyHeaderItem[] = [
   {
-    ulrPrefix: "",
+    urlPrefix: "",
     headers: {},
     inspectUrls: [],
-    handler: noop,
+    // handler: noop,
   },
 ];

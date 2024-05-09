@@ -49,5 +49,6 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
   },
   {
     urls: ["*://api.juejin.cn/*"],
-  }
+  },
+  ["extraHeaders", "requestHeaders"]
 );
