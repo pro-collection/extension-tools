@@ -18,5 +18,14 @@
     "type": "module"
   },
   "host_permissions": ["http://*/*", "https://*/*"],
-  "permissions": ["activeTab", "scripting", "storage", "clipboardWrite", "tabs", "userScripts", "notifications"]
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "clipboardWrite",
+    "tabs",
+    "userScripts",
+    "notifications",
+    "webRequest"
+  ]
 }
