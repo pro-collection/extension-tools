@@ -21,6 +21,18 @@ const ListCompoennts: FC = () => {
             label: "点击复制当前页面文章为 Markdown 文本格式",
             actions: [<CopyButtonComponent />],
           },
+          {
+            label: "图床",
+            actions: [
+              <Button
+                onClick={() => {
+                  window.open("chrome-extension://nepbnjgiiihmemlfldbncfelglceibnh/pages/imgStatic/index.html");
+                }}
+              >
+                跳转
+              </Button>,
+            ],
+          },
         ]}
         renderItem={(item) => <List.Item actions={item.actions}>{item.label}</List.Item>}
       />
