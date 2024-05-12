@@ -2,11 +2,7 @@
   "manifest_version": 3,
   "name": "juejin tools",
   "description": "juejin 工具库扩展程序",
-<<<<<<< HEAD
   "version": "1.2",
-=======
-  "version": "1.1",
->>>>>>> @{-1}
   "action": {
     "default_icon": "images/icon.png",
     "default_popup": "popup/index.html"
