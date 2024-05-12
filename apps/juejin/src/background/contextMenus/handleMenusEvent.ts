@@ -1,4 +1,6 @@
-import { ActionType } from "@src/consts";
+import { ActionType, Pages } from "@src/consts";
+import axios from "axios";
+import { isEmpty } from "lodash";
 
 // A generic onclick callback function.
 const handleMenusEvent = async (info: chrome.contextMenus.OnClickData, tab?: chrome.tabs.Tab) => {
@@ -11,10 +13,59 @@ const handleMenusEvent = async (info: chrome.contextMenus.OnClickData, tab?: chr
 
       console.log(`[yanle] - background 向 popup 发送信息`);
 
-      await chrome.runtime.sendMessage({
-        actionType: ActionType.background2pupup.contextMenuWithImage,
-        url: info?.srcUrl,
+      /* ==============================  注入 content script , 获取 复制的文本 - Start ============================== */
+      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+
+      if (!tab) {
+        return "";
+      }
+
+      await chrome.scripting.executeScript({
+        target: { tabId: tab?.id as number },
+        func: function () {
+          navigator.clipboard.writeText("2312312312312312");
+        },
+        injectImmediately: true,
       });
+      /* ==============================  注入 content script , 获取 复制的文本 - End   ============================== */
+
+      // 发起请求
+      // userInfo 判定用户的登录情况
+      let userInfo;
+      try {
+        userInfo = await fetch("https://api.juejin.cn/user_api/v1/user/get", {
+          method: "GET",
+        }).then((res) => res.json());
+      } catch (e) {
+        console.log(`[yanle] - e`, e);
+      }
+
+      if (isEmpty(userInfo?.data?.user_name)) {
+        // 用户没有登录
+        console.log(`[yanle] - 没有登录`);
+      } else {
+        console.log(`[yanle] - user_info`, userInfo?.data?.user_name);
+      }
+
+      // 保存 图片 url 链接
+      let saveImg;
+      try {
+        saveImg = await fetch("https://juejin.cn/image/urlSave", {
+          method: "POST",
+          body: JSON.stringify({
+            url: info?.srcUrl,
+          }),
+          headers: {
+            // 设置请求头，告诉服务器我们发送的是JSON数据
+            "Content-Type": "application/json",
+          },
+        }).then((res) => res.json());
+      } catch (e) {
+        console.log(`[yanle] - save url error`, e);
+      }
+
+      console.log(`[yanle] - saveImg`, saveImg);
+
       return;
     }
     default:

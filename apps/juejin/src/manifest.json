@@ -27,6 +27,7 @@
     "userScripts",
     "notifications",
     "webRequest",
-    "contextMenus"
+    "contextMenus",
+    "cookies"
   ]
 }
