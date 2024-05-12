@@ -1,12 +1,10 @@
 import { find, includes, map } from "lodash";
-import { interceptModifyHeaders } from "./consts";
+import { INTERCEPT_MODIFY_HEADERS } from "./consts";
 import { HandleBeforeSendHeaders, InterceptModifyHeaderItem } from "./interface";
 
 const handleBeforeSendHeaders: HandleBeforeSendHeaders = (details) => {
-  console.log(`[yanle] - detail`, details);
-
   // 找到当前匹配的请求
-  const currentIntercept: InterceptModifyHeaderItem | undefined = find(interceptModifyHeaders, (item) =>
+  const currentIntercept: InterceptModifyHeaderItem | undefined = find(INTERCEPT_MODIFY_HEADERS, (item) =>
     includes(details.url, item.urlPrefix)
   );
 

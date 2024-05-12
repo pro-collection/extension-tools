@@ -1,4 +1,5 @@
 import * as React from "react";
+import "@src/popup/listener";
 import "./style.css";
 import ListCompoennts from "@src/popup/components/list";
 

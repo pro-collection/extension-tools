@@ -13,6 +13,10 @@ export const ActionType = {
     copy: "content2pupup - injectContentScripts - content.index.js",
   },
   content2pupup: {},
+  background2pupup: {
+    // 触发 contextMenus 图片点击
+    contextMenuWithImage: "background2pupup - contextMenus - image",
+  },
 };
 
 /**

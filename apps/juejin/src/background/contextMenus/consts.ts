@@ -3,10 +3,10 @@
  */
 export const CONTEXT_MENUS_TYPE: chrome.contextMenus.ContextType[] = [
   "page",
-  "selection",
+  // "selection",
   "link",
-  "editable",
+  // "editable",
   "image",
-  "video",
-  "audio",
+  // "video",
+  // "audio",
 ];

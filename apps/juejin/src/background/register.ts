@@ -1,7 +1,8 @@
 import { map, flatMap } from "lodash";
 import { handleRuntimeListener, handleUpdatedListener } from "./listener";
-import { interceptModifyHeaders } from "./handleBeforeSendHeaders/consts";
+import { INTERCEPT_MODIFY_HEADERS } from "./handleBeforeSendHeaders/consts";
 import handleBeforeSendHeaders from "./handleBeforeSendHeaders";
+import handleMenusEvent from "./contextMenus/handleMenusEvent";
 
 /**
  * 页签更新的监听器
@@ -21,7 +22,12 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
   handleBeforeSendHeaders,
   {
     // 处理拦截的请求
-    urls: flatMap(map(interceptModifyHeaders, (item) => item.inspectUrls)),
+    urls: flatMap(map(INTERCEPT_MODIFY_HEADERS, (item) => item.inspectUrls)),
   },
   ["extraHeaders", "requestHeaders"]
 );
+
+/**
+ * 菜单点击事件接收器
+ */
+chrome.contextMenus.onClicked.addListener(handleMenusEvent);
