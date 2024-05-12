@@ -125,7 +125,7 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         { from: "src/manifest.json", to: path.resolve(__dirname, "../dist") },
-        { from: path.resolve(__dirname, "../src/images"), to: path.resolve(__dirname, "../dist/images") },
+        { from: path.resolve(__dirname, "../src/icons"), to: path.resolve(__dirname, "../dist/icons") },
         { from: path.resolve(__dirname, "../src/style"), to: path.resolve(__dirname, "../dist/style") },
       ],
     }),
