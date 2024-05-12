@@ -41,7 +41,6 @@ const copyRunner = async () => {
       (value) => value.replace(/```python\npython/gi, "```python\n"),
       (value) => value.replace(/```go\ngo/gi, "```go\n"),
       (value) => value.replace(/```c\nc/gi, "```c\n"),
-      (value) => value.replace(/```c\nc/gi, "```c\n"),
       (value) => value.replace(/```c\+\+\nc\+\+/gi, "```c++\n"),
       (value) => value.replace(/```ini\nini/gi, "```ini\n"),
       (value) => value.replace(/```json\njson/gi, "```json\n"),
