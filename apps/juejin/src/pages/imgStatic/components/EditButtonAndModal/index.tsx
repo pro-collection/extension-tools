@@ -41,11 +41,27 @@ const EditButtonAndModal: FC = () => {
       console.log(`[yanle] - 表单校验错误`, e);
     }
 
-    // setIsModalOpen(false);
+    // 拿着这些链接去分别请求获取对应的文本
+    // 发起通知给 background 获取 content 文本
+
+    const data = await fetch(
+      "https://api.juejin.cn/content_api/v1/article_draft/detail?aid=2608&uuid=7203748436654097955",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          draft_id: "7297130301288923171",
+        }),
+      }
+    ).then((res) => res.json());
+
+    console.log(`[yanle] - data`, data);
+
+    handleCancel();
   };
 
   const handleCancel = () => {
     setIsModalOpen(false);
+    form?.resetFields();
   };
 
   return (
@@ -54,7 +70,8 @@ const EditButtonAndModal: FC = () => {
 
       <Modal
         width={600}
-        title="添加图库链接 - 支持添加多个 "
+        destroyOnClose
+        title="添加图库链接 - 支持添加多个"
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}

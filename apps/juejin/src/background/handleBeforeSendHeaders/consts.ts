@@ -6,9 +6,13 @@ import { InterceptModifyHeaderItem } from "./interface";
  */
 export const INTERCEPT_MODIFY_HEADERS: InterceptModifyHeaderItem[] = [
   {
-    urlPrefix: "",
-    headers: {},
-    inspectUrls: [],
+    urlPrefix: "api.juejin.cn",
+    headers: {
+      Origin: "https://juejin.cn",
+      Referer: "https://juejin.cn/",
+      "Content-Type": "application/json",
+    },
+    inspectUrls: ["*://api.juejin.cn/*"],
     // handler: noop,
   },
 ];
