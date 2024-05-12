@@ -34,16 +34,5 @@ export const handleRuntimeListener = (request: any, message: any, sendResponse: 
  * @param tab
  */
 export const handleUpdatedListener = async (tabId: number, changeInfo: object, tab: chrome.tabs.Tab) => {
-  // console.log(`[yanle] - navigator.clipboard`, navigator?.clipboard?.writeText);
-  // 看看是否有复制能力？
-  // navigator.clipboard
-  //   .writeText("我只是测试复制内容出来")
-  //   .then((res) => {
-  //     console.log(`[yanle] - res`, res);
-  //   })
-  //   .catch((e) => {
-  //     console.log(`[yanle] - e`, e);
-  //   });
-
   readUpdater(tabId, changeInfo, tab);
 };

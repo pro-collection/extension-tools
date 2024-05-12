@@ -26,6 +26,7 @@
     "tabs",
     "userScripts",
     "notifications",
-    "webRequest"
+    "webRequest",
+    "contextMenus"
   ]
 }

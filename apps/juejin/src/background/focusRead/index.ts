@@ -3,7 +3,6 @@ import { filter, forEach, get, includes, isEmpty, map } from "lodash";
 
 const getPostTabs = async () => {
   const tabs = await chrome.tabs.query({});
-  console.log(`[yanle] - tabs`, tabs);
   return filter(tabs, (item) => includes(item.url, Pages.post));
 };
 
