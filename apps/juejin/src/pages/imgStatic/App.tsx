@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "@src/popup/listener";
 import "./style.css";
 import { Tabs } from "antd";
 import type { TabsProps } from "antd";
 import EditButtonAndModal from "./components/EditButtonAndModal";
+import { ActionType } from "@src/consts";
 
 const items: TabsProps["items"] = [
   {
@@ -28,7 +29,12 @@ const onChange = (key: string) => {
 };
 
 const App: React.FC = () => {
-  const [] = useState();
+  useEffect(() => {
+    // 通知插入脚本
+    chrome.runtime.sendMessage({
+      actionType: ActionType.imgStatic2background.injectIframe,
+    });
+  }, []);
 
   return (
     <div className="w-[100vw]" id="container">
@@ -38,6 +44,13 @@ const App: React.FC = () => {
       </header>
 
       <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+
+      <div style={{ display: "none" }}>
+        <iframe
+          id="7297130301288923171"
+          src="https://juejin.cn/editor/drafts/7297130301288923171"
+        ></iframe>
+      </div>
     </div>
   );
 };

@@ -12,10 +12,6 @@ const handleBeforeSendHeaders: HandleBeforeSendHeaders = (details) => {
   // 如果没有找到请求，就直接返回
   if (!currentIntercept) return undefined;
 
-  console.log(`[yanle] - pre details.requestHeaders`, cloneDeep(details.requestHeaders));
-
-  console.log(`[yanle] - currentIntercept`, currentIntercept);
-
   // 替换 header
   const newHeader: chrome.webRequest.HttpHeaders = (details.requestHeaders = map(
     details.requestHeaders,
@@ -42,8 +38,6 @@ const handleBeforeSendHeaders: HandleBeforeSendHeaders = (details) => {
 
   // 支持特化处理
   const res = currentIntercept.handler?.(details) || {};
-
-  console.log(`[yanle] - details.requestHeaders`, cloneDeep(newHeader));
 
   return {
     ...details,

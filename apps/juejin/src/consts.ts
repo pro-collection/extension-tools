@@ -17,6 +17,10 @@ export const ActionType = {
     // 触发 contextMenus 图片点击
     contextMenuWithImage: "background2pupup - contextMenus - image",
   },
+
+  imgStatic2background: {
+    injectIframe: "imgStatic2background - injectIframe - script",
+  },
 };
 
 /**

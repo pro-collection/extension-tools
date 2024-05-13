@@ -13,11 +13,12 @@
     "48": "icons/icon.png",
     "128": "icons/icon.png"
   },
+
   "background": {
     "service_worker": "background/index.js",
     "type": "module"
   },
-  "host_permissions": ["http://*/*", "https://*/*"],
+  "host_permissions": ["http://*/*", "https://*/*", "*://*/*"],
   "permissions": [
     "activeTab",
     "scripting",

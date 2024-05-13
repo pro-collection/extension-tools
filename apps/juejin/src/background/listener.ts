@@ -1,6 +1,7 @@
 import { readRunner, readUpdater } from "@src/background/focusRead";
 import { ActionType } from "@src/consts";
 import copyRunner from "./copy";
+import getDraftContent from "./getDraftContent";
 
 /**
  * 运行时 事件接收器
@@ -19,6 +20,12 @@ export const handleRuntimeListener = (request: any, message: any, sendResponse: 
       copyRunner().then((res) => {
         sendResponse(res);
       });
+    case ActionType.imgStatic2background.injectIframe:
+      {
+        getDraftContent();
+        console.log(`[yanle] - background ActionType.imgStatic2background.injectIframe`);
+        break;
+      }
       break;
     default:
       break;
@@ -33,6 +40,10 @@ export const handleRuntimeListener = (request: any, message: any, sendResponse: 
  * @param changeInfo
  * @param tab
  */
-export const handleUpdatedListener = async (tabId: number, changeInfo: object, tab: chrome.tabs.Tab) => {
+export const handleUpdatedListener = async (
+  tabId: number,
+  changeInfo: object,
+  tab: chrome.tabs.Tab
+) => {
   readUpdater(tabId, changeInfo, tab);
 };
