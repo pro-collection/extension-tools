@@ -4,7 +4,7 @@
  * @param params
  * @returns
  */
-const fetchGetContent = async (url: string, params: URLSearchParams) => {
+const fetchGetContent = (url: string, params: URLSearchParams) => {
   let draftId = "";
 
   // 正则表达式来匹配路径最后一个非数字部分
@@ -49,7 +49,6 @@ const fetchGetContent = async (url: string, params: URLSearchParams) => {
         return res.json();
       })
       .then((res) => {
-        console.log(`[yanle] - res`, res);
         return res;
       })
       .catch((e) => {

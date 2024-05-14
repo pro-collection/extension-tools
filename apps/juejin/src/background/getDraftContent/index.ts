@@ -1,5 +1,6 @@
-import { find, get } from "lodash";
+import { find, forEach, get } from "lodash";
 import getUrlParams from "./getUrlParams";
+import fetchGetContent from "./fetchGetContent";
 
 /**
  *
@@ -9,16 +10,36 @@ const getDraftContent = async (urls: string[]) => {
   const urlParams = await getUrlParams();
 
   // 通过创建 tabs 的方式来进行获取文件
-  // const tabs = await chrome.windows.create({
-  //   url: ["https://juejin.cn/editor/drafts/7297130301288923171"],
-  //   focused: false,
-  //   // state: "minimized",
-  //   // type: "popup",
-  //   left: 0,
-  //   top: 0,
-  //   height: 200,
-  //   width: 200,
-  // });
+  const win = await chrome.windows.create({
+    url: ["https://juejin.cn/editor/drafts/7297130301288923171"],
+    focused: false,
+    // state: "minimized",
+    // type: "popup",
+    left: 0,
+    top: 0,
+    height: 200,
+    width: 200,
+  });
+
+  const getContentList: Promise<any>[] = [];
+
+  console.log(`[yanle] - win`, win);
+  forEach(win?.tabs, (tab) => {
+    const func = fetchGetContent(tab?.url || (tab?.pendingUrl as string), urlParams);
+
+    getContentList.push(
+      chrome.scripting.executeScript({
+        target: { tabId: tab?.id as number },
+        func,
+        injectImmediately: true,
+      })
+    );
+  });
+
+  const res = await Promise.all(getContentList);
+  console.log(`[yanle] - res`, res);
+
+  // await chrome.windows.remove(win?.id as number);
 
   // 获取 cookies
 
