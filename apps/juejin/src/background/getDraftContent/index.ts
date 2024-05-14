@@ -1,29 +1,30 @@
-const getDraftContent = async () => {
-  // 注入 content script , 获取 复制的文本， 然后将这个文本 给 popup
-  // const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+import { find, get } from "lodash";
+import getUrlParams from "./getUrlParams";
 
-  // console.log(`[yanle] - getDraftContent tab: `, tab);
-
-  // if (!tab) {
-  //   return "";
-  // }
+/**
+ *
+ * @param urls 请求链接组
+ */
+const getDraftContent = async (urls: string[]) => {
+  const urlParams = await getUrlParams();
 
   // 通过创建 tabs 的方式来进行获取文件
-  const tabs = await chrome.windows.create({
-    url: [
-      "https://juejin.cn/editor/drafts/7297130301288923171",
-      "https://juejin.cn/editor/drafts/7297130301288923171",
-    ],
-    focused: false,
-    // state: "minimized",
-    left: 0,
-    top: 0,
-    height: 1,
-    width: 1,
-  });
+  // const tabs = await chrome.windows.create({
+  //   url: ["https://juejin.cn/editor/drafts/7297130301288923171"],
+  //   focused: false,
+  //   // state: "minimized",
+  //   // type: "popup",
+  //   left: 0,
+  //   top: 0,
+  //   height: 200,
+  //   width: 200,
+  // });
 
-  console.log(`[yanle] - tabs`, tabs);
+  // 获取 cookies
 
+  // console.log(`[yanle] - tabs`, tabs);
+
+  // 判定是否登录  https://api.juejin.cn/user_api/v1/user/get
   // const tab = await chrome.tabs.create({
   //   url: "https://juejin.cn/editor/drafts/7297130301288923171",
   //   active: false,

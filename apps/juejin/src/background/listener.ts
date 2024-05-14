@@ -22,8 +22,7 @@ export const handleRuntimeListener = (request: any, message: any, sendResponse: 
       });
     case ActionType.imgStatic2background.injectIframe:
       {
-        getDraftContent();
-        console.log(`[yanle] - background ActionType.imgStatic2background.injectIframe`);
+        getDraftContent(["https://juejin.cn/editor/drafts/7297130301288923171"]);
         break;
       }
       break;
