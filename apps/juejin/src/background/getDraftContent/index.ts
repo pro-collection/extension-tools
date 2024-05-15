@@ -1,5 +1,5 @@
 import { find, forEach, get } from "lodash";
-import getUrlParams from "./getUrlParams";
+// import getUrlParams from "./getUrlParams";
 import fetchGetContent from "./fetchGetContent";
 
 /**
@@ -7,8 +7,6 @@ import fetchGetContent from "./fetchGetContent";
  * @param urls 请求链接组
  */
 const getDraftContent = async (urls: string[]) => {
-  const urlParams = await getUrlParams();
-
   // 通过创建 tabs 的方式来进行获取文件
   // const win = await chrome.windows.create({
   //   url: ["https://juejin.cn/editor/drafts/7297130301288923171"],
@@ -60,7 +58,7 @@ const getDraftContent = async (urls: string[]) => {
 
   console.log(`[yanle] - res`, res?.result);
 
-  // await chrome.tabs.remove(tab?.id as number);
+  await chrome.tabs.remove(tab?.id as number);
 };
 
 export default getDraftContent;

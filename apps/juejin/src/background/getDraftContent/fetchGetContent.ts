@@ -2,6 +2,7 @@
 
 /**
  * 通过请求来注入到 content script 里面的脚本， 用户获取 草稿文本内容
+ * 注入脚本， 必定是要纯函数
  * @returns
  */
 const fetchGetContent = () => {
