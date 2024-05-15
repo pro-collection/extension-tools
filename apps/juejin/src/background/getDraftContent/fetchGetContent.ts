@@ -74,15 +74,10 @@ const fetchGetContent = () => {
       "sec-fetch-dest": "empty",
       "sec-fetch-mode": "cors",
       "sec-fetch-site": "same-site",
-      // "x-secsdk-csrf-token":
-      //   "0001000000018c2c02377ce4f96a7e60be8d4c6a62fb33f25da327725a62de2714044800f53a17cecd0d2548fb1d",
-      origin: "https://juejin.cn",
-      referrer: "https://juejin.cn/",
     },
     referrer: "https://juejin.cn/",
     referrerPolicy: "strict-origin-when-cross-origin",
-    body: body,
-    // body: '{"draft_id":"7297130301288923171"}',
+    body,
     method: "POST",
     mode: "cors",
     credentials: "include",
@@ -94,7 +89,7 @@ const fetchGetContent = () => {
       return res;
     })
     .catch((e) => {
-      console.log(`[yanle] - request error e`, e);
+      throw e;
     });
 };
 

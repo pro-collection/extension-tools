@@ -1,11 +1,34 @@
 import React, { useEffect, useState } from "react";
 import "@src/popup/listener";
 import "./style.css";
-import { Tabs, Spin } from "antd";
+import { Tabs, Spin, Image, Button, Flex } from "antd";
 import type { TabsProps } from "antd";
 import EditButtonAndModal from "./components/EditButtonAndModal";
 import { ActionType, StorageKey } from "@src/consts";
-import { isEmpty, map } from "lodash";
+import { divide, isEmpty, map } from "lodash";
+import { SearchOutlined, ToolFilled } from "@ant-design/icons";
+import Previewer from "./components/Previewer";
+
+const mock = [
+  {
+    pageTitle: "图床",
+    pageId: "7297130301288923171",
+    imgStatic: [
+      {
+        url: "https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5883f0d011474daf94cf38f56612d170~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1536&h=520&s=85225&e=png&b=f8f9fa",
+        name: "001.png",
+      },
+      {
+        url: "https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/35522b6e1cd54b218c32d50c1fb100c7~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=158&h=146&s=32548&e=png&b=f2f0f0",
+        name: "hello_extensions.png",
+      },
+      {
+        url: "https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5021dcd4bf1a4b4fa3a3d563587bfb8b~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=158&h=146&s=32548&e=png&b=f2f0f0",
+        name: "hello_extensions.png",
+      },
+    ],
+  },
+];
 
 const items: TabsProps["items"] = [
   {
@@ -40,24 +63,18 @@ const App: React.FC = () => {
         setUrls(imgBaseUrlList);
 
         // 通过插件来获取静态图片的
-        const result = await chrome.runtime.sendMessage({
-          actionType: ActionType.imgStatic2background.injectIframe,
-          urls: imgBaseUrlList,
-        });
+        // const result = await chrome.runtime.sendMessage({
+        //   actionType: ActionType.imgStatic2background.injectIframe,
+        //   urls: imgBaseUrlList,
+        // });
 
-        console.log(`[yanle] - result`, result);
+        // console.log(`[yanle] - result`, result);
 
-        const statics: TabsProps["items"] = map(result, (item) => {
+        const statics: TabsProps["items"] = map(mock, (item) => {
           return {
             key: item.pageId,
             label: item.pageTitle,
-            children: () => (
-              <div>
-                {Object.values(item.imgStatic || {}).map((url: string) => (
-                  <p key={url}>{url}</p>
-                ))}
-              </div>
-            ),
+            children: <Previewer imgStatic={item.imgStatic} />,
           };
         });
 
