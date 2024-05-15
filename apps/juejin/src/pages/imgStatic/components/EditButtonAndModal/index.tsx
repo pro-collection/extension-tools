@@ -1,6 +1,7 @@
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Form, FormInstance, Input, Modal } from "antd";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
+import { EditButtonAndModalProps } from "./interface";
 
 const formItemLayout = {
   labelCol: {
@@ -24,7 +25,9 @@ const formItemLayoutWithOutLabel = {
  * 编辑图床分区模态框
  * @returns
  */
-const EditButtonAndModal: FC = () => {
+const EditButtonAndModal: FC<EditButtonAndModalProps> = (props) => {
+  const { setUrls, urls } = props;
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [form] = Form.useForm();
@@ -35,27 +38,11 @@ const EditButtonAndModal: FC = () => {
 
   const handleOk = async () => {
     try {
-      const values = await form?.validateFields();
-      console.log(`[yanle] - values`, values);
+      const { links } = await form?.validateFields();
+      setUrls(links);
     } catch (e) {
       console.log(`[yanle] - 表单校验错误`, e);
     }
-
-    // 拿着这些链接去分别请求获取对应的文本
-    // 发起通知给 background 获取 content 文本
-
-    const data = await fetch(
-      "https://api.juejin.cn/content_api/v1/article_draft/detail?aid=2608&uuid=7203748436654097955",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          draft_id: "7297130301288923171",
-        }),
-      }
-    ).then((res) => res.json());
-
-    console.log(`[yanle] - data`, data);
-
     handleCancel();
   };
 
@@ -63,6 +50,13 @@ const EditButtonAndModal: FC = () => {
     setIsModalOpen(false);
     form?.resetFields();
   };
+
+  /**
+   * 初始化
+   */
+  useEffect(() => {
+    form.setFieldValue("links", urls);
+  }, [urls]);
 
   return (
     <>
@@ -76,7 +70,12 @@ const EditButtonAndModal: FC = () => {
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        <Form initialValues={{ links: [""] }} form={form} name="dynamic_form_item" {...formItemLayoutWithOutLabel}>
+        <Form
+          initialValues={{ links: urls }}
+          form={form}
+          name="dynamic_form_item"
+          {...formItemLayoutWithOutLabel}
+        >
           <Form.List
             name="links"
             rules={[
@@ -113,12 +112,20 @@ const EditButtonAndModal: FC = () => {
                       <Input placeholder="请输入掘金草稿文档链接地址" style={{ width: "90%" }} />
                     </Form.Item>
                     {fields.length > 1 ? (
-                      <MinusCircleOutlined className="dynamic-delete-button pl-2" onClick={() => remove(field.name)} />
+                      <MinusCircleOutlined
+                        className="dynamic-delete-button pl-2"
+                        onClick={() => remove(field.name)}
+                      />
                     ) : null}
                   </Form.Item>
                 ))}
                 <Form.Item>
-                  <Button type="dashed" onClick={() => add()} style={{ width: "90%" }} icon={<PlusOutlined />}>
+                  <Button
+                    type="dashed"
+                    onClick={() => add()}
+                    style={{ width: "90%" }}
+                    icon={<PlusOutlined />}
+                  >
                     添加字段
                   </Button>
                   <Form.ErrorList errors={errors} />

@@ -5,6 +5,7 @@ import { Tabs } from "antd";
 import type { TabsProps } from "antd";
 import EditButtonAndModal from "./components/EditButtonAndModal";
 import { ActionType, StorageKey } from "@src/consts";
+import { isEmpty } from "lodash";
 
 const items: TabsProps["items"] = [
   {
@@ -29,25 +30,34 @@ const onChange = (key: string) => {
 };
 
 const App: React.FC = () => {
+  const [urls, setUrls] = useState<string[]>([]);
+
   useEffect(() => {
     const runner = async () => {
       const { imgBaseUrlList = [] } = await chrome.storage.local.get(StorageKey.imgBaseUrlList);
       console.log(`[yanle] - imgbaseurllist`, imgBaseUrlList);
+
+      if (!isEmpty(imgBaseUrlList)) {
+        setUrls(imgBaseUrlList);
+
+        // 通过插件来获取静态图片的
+        // const result = await chrome.runtime.sendMessage({
+        //   actionType: ActionType.imgStatic2background.injectIframe,
+        //   urls: imgBaseUrlList,
+        // });
+
+        // console.log(`[yanle] - result`, result);
+      }
     };
 
     runner();
-
-    // 通知插入脚本
-    // chrome.runtime.sendMessage({
-    //   actionType: ActionType.imgStatic2background.injectIframe,
-    // });
   }, []);
 
   return (
     <div className="w-[100vw]" id="container">
       <header className="flex items-center justify-between p-5">
         <span className="text-3xl">掘金图床</span>
-        <EditButtonAndModal />
+        <EditButtonAndModal setUrls={setUrls} urls={urls} />
       </header>
 
       <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
