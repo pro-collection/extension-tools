@@ -30,9 +30,12 @@ const onChange = (key: string) => {
 
 const App: React.FC = () => {
   useEffect(() => {
-    chrome.storage.local.get(StorageKey.imgBaseUrlList).then(({ imgBaseUrlList = [] }) => {
-      console.log(`[yanle] - imgBaseUrlList`, imgBaseUrlList);
-    });
+    const runner = async () => {
+      const { imgBaseUrlList = [] } = await chrome.storage.local.get(StorageKey.imgBaseUrlList);
+      console.log(`[yanle] - imgbaseurllist`, imgBaseUrlList);
+    };
+
+    runner();
 
     // 通知插入脚本
     // chrome.runtime.sendMessage({
@@ -48,13 +51,6 @@ const App: React.FC = () => {
       </header>
 
       <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
-
-      <div style={{ display: "none" }}>
-        <iframe
-          id="7297130301288923171"
-          src="https://juejin.cn/editor/drafts/7297130301288923171"
-        ></iframe>
-      </div>
     </div>
   );
 };
