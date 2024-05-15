@@ -53,7 +53,11 @@ const Previewer: FC<{ imgStatic: { name: string; url: string }[] }> = (props) =>
                 <Button size="small" onClick={handleCopyWithMarkdown(name, url)}>
                   复制 Markdown 链接
                 </Button>
-                <Button size="small">下载</Button>
+                <Button size="small">
+                  <a href={url} download={name}>
+                    下载
+                  </a>
+                </Button>
               </Flex>
             </div>
           ))}
