@@ -4,7 +4,7 @@ import "./style.css";
 import { Tabs } from "antd";
 import type { TabsProps } from "antd";
 import EditButtonAndModal from "./components/EditButtonAndModal";
-import { ActionType } from "@src/consts";
+import { ActionType, StorageKey } from "@src/consts";
 
 const items: TabsProps["items"] = [
   {
@@ -30,10 +30,14 @@ const onChange = (key: string) => {
 
 const App: React.FC = () => {
   useEffect(() => {
-    // 通知插入脚本
-    chrome.runtime.sendMessage({
-      actionType: ActionType.imgStatic2background.injectIframe,
+    chrome.storage.local.get(StorageKey.imgBaseUrlList).then(({ imgBaseUrlList = [] }) => {
+      console.log(`[yanle] - imgBaseUrlList`, imgBaseUrlList);
     });
+
+    // 通知插入脚本
+    // chrome.runtime.sendMessage({
+    //   actionType: ActionType.imgStatic2background.injectIframe,
+    // });
   }, []);
 
   return (

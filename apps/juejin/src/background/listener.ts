@@ -22,7 +22,9 @@ export const handleRuntimeListener = (request: any, message: any, sendResponse: 
       });
     case ActionType.imgStatic2background.injectIframe:
       {
-        getDraftContent(["https://juejin.cn/editor/drafts/7297130301288923171"]);
+        getDraftContent(["https://juejin.cn/editor/drafts/7297130301288923171"]).then((res) =>
+          sendResponse(res)
+        );
         break;
       }
       break;

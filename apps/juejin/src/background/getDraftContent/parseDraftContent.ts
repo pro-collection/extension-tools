@@ -1,4 +1,9 @@
-const parseDraft = (content = "") => {
+/**
+ * 解析或的图片信息
+ * @param content
+ * @returns
+ */
+const parseDraftContent = (content = "") => {
   // 正则表达式用于匹配 Markdown 中的图片 alt 文本和链接
   const regex = /!\[(.*?)\]\((http.+?)\)/gi;
 
@@ -17,3 +22,5 @@ const parseDraft = (content = "") => {
 
   return images;
 };
+
+export default parseDraftContent;

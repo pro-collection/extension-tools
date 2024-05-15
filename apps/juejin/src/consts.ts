@@ -38,6 +38,7 @@ export enum Action {
  */
 export const StorageKey = {
   focusReadStatus: "focusReadStatus", // 掘金文章阅读的状态
+  imgBaseUrlList: "imgBaseUrlList",
 };
 
 /**
