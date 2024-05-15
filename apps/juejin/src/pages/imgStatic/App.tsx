@@ -35,9 +35,9 @@ const App: React.FC = () => {
     });
 
     // 通知插入脚本
-    // chrome.runtime.sendMessage({
-    //   actionType: ActionType.imgStatic2background.injectIframe,
-    // });
+    chrome.runtime.sendMessage({
+      actionType: ActionType.imgStatic2background.injectIframe,
+    });
   }, []);
 
   return (
