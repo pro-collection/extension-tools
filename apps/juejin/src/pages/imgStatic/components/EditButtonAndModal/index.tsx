@@ -2,6 +2,7 @@ import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Form, FormInstance, Input, Modal } from "antd";
 import React, { FC, useEffect, useState } from "react";
 import { EditButtonAndModalProps } from "./interface";
+import { StorageKey } from "@src/consts";
 
 const formItemLayout = {
   labelCol: {
@@ -26,7 +27,7 @@ const formItemLayoutWithOutLabel = {
  * @returns
  */
 const EditButtonAndModal: FC<EditButtonAndModalProps> = (props) => {
-  const { setUrls, urls } = props;
+  const { setUrls, urls, runner } = props;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -40,6 +41,11 @@ const EditButtonAndModal: FC<EditButtonAndModalProps> = (props) => {
     try {
       const { links } = await form?.validateFields();
       setUrls(links);
+
+      // 保存到 本地；
+      await chrome.storage.local.set({ [StorageKey.imgBaseUrlList]: links });
+
+      await runner();
     } catch (e) {
       console.log(`[yanle] - 表单校验错误`, e);
     }
@@ -55,8 +61,8 @@ const EditButtonAndModal: FC<EditButtonAndModalProps> = (props) => {
    * 初始化
    */
   useEffect(() => {
-    form.setFieldValue("links", urls);
-  }, [urls]);
+    form?.setFieldValue("links", urls);
+  }, [urls, form]);
 
   return (
     <>

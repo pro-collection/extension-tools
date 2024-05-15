@@ -21,7 +21,6 @@ const getDraftContent = async (urls: string[]) => {
   });
 
   const getContentList: Promise<any>[] = [];
-  console.log(`[yanle] - win`, win);
   forEach(win?.tabs, (tab) => {
     getContentList.push(
       chrome.scripting

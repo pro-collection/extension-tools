@@ -1,27 +1,17 @@
 import React, { useEffect, useState } from "react";
 import "@src/popup/listener";
 import "./style.css";
-import { Tabs } from "antd";
+import { Tabs, Spin } from "antd";
 import type { TabsProps } from "antd";
 import EditButtonAndModal from "./components/EditButtonAndModal";
 import { ActionType, StorageKey } from "@src/consts";
-import { isEmpty } from "lodash";
+import { isEmpty, map } from "lodash";
 
 const items: TabsProps["items"] = [
   {
     key: "1",
     label: "Tab 1",
     children: "Content of Tab Pane 1",
-  },
-  {
-    key: "2",
-    label: "Tab 2",
-    children: "Content of Tab Pane 2",
-  },
-  {
-    key: "3",
-    label: "Tab 3",
-    children: "Content of Tab Pane 3",
   },
 ];
 
@@ -31,9 +21,18 @@ const onChange = (key: string) => {
 
 const App: React.FC = () => {
   const [urls, setUrls] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const runner = async () => {
+  // 主要数据
+  const [imgStatics, setImgStatics] = useState<TabsProps["items"]>([]);
+
+  /**
+   * 获取 图片资源 核心逻辑
+   */
+  const runner = async () => {
+    setLoading(true);
+
+    try {
       const { imgBaseUrlList = [] } = await chrome.storage.local.get(StorageKey.imgBaseUrlList);
       console.log(`[yanle] - imgbaseurllist`, imgBaseUrlList);
 
@@ -41,15 +40,43 @@ const App: React.FC = () => {
         setUrls(imgBaseUrlList);
 
         // 通过插件来获取静态图片的
-        // const result = await chrome.runtime.sendMessage({
-        //   actionType: ActionType.imgStatic2background.injectIframe,
-        //   urls: imgBaseUrlList,
-        // });
+        const result = await chrome.runtime.sendMessage({
+          actionType: ActionType.imgStatic2background.injectIframe,
+          urls: imgBaseUrlList,
+        });
+
+        console.log(`[yanle] - result`, result);
+
+        const statics: TabsProps["items"] = map(result, (item) => {
+          return {
+            key: item.pageId,
+            label: item.pageTitle,
+            children: () => (
+              <div>
+                {Object.values(item.imgStatic || {}).map((url: string) => (
+                  <p key={url}>{url}</p>
+                ))}
+              </div>
+            ),
+          };
+        });
+
+        setImgStatics(statics);
 
         // console.log(`[yanle] - result`, result);
+      } else {
+        setImgStatics([]);
       }
-    };
+    } catch (e) {
+      setLoading(false);
+      console.log(`[yanle] - e`, e);
+    }
 
+    setLoading(false);
+  };
+
+  // 初始化
+  useEffect(() => {
     runner();
   }, []);
 
@@ -57,10 +84,14 @@ const App: React.FC = () => {
     <div className="w-[100vw]" id="container">
       <header className="flex items-center justify-between p-5">
         <span className="text-3xl">掘金图床</span>
-        <EditButtonAndModal setUrls={setUrls} urls={urls} />
+        <EditButtonAndModal runner={runner} setUrls={setUrls} urls={urls} />
       </header>
 
-      <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+      <Spin spinning={loading}>
+        <div className="p-5">
+          <Tabs defaultActiveKey="1" items={imgStatics} />
+        </div>
+      </Spin>
     </div>
   );
 };
