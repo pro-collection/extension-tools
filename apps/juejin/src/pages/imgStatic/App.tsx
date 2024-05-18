@@ -25,7 +25,6 @@ const App: React.FC = () => {
 
     try {
       const { imgBaseUrlList = [] } = await chrome.storage.local.get(StorageKey.imgBaseUrlList);
-      console.log(`[yanle] - imgbaseurllist`, imgBaseUrlList);
 
       if (!isEmpty(imgBaseUrlList)) {
         setUrls(imgBaseUrlList);

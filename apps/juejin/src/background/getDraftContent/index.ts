@@ -36,8 +36,6 @@ const getDraftContent = async (urls: string[]) => {
     // type: "popup",
     left: 0,
     top: 0,
-    height: 200,
-    width: 200,
   });
 
   tabCount = urls.length;
@@ -82,10 +80,8 @@ const getDraftContent = async (urls: string[]) => {
 
   const res = await Promise.all(getContentList);
 
-  console.log(`[yanle] - res`, res);
-
   // 关闭
-  // await chrome.windows.remove(win?.id as number);
+  await chrome.windows.remove(win?.id as number);
 
   // const mapInfo = map(res, (item) => {
   //   const pageTitle = get(item, "data.article_draft.title", "");

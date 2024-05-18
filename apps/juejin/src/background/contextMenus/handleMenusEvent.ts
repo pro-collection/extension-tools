@@ -4,14 +4,11 @@ import { isEmpty } from "lodash";
 
 // A generic onclick callback function.
 const handleMenusEvent = async (info: chrome.contextMenus.OnClickData, tab?: chrome.tabs.Tab) => {
-  console.log(`[yanle] - info`, info);
   switch (info.menuItemId) {
     case "image": {
       // 图片场景
       // 拿到图片之后， 直接校验该图片链接， 如果是 juejin 的图片域名场景， 那么直接到粘贴板
       // 尝试一下通知
-
-      console.log(`[yanle] - background 向 popup 发送信息`);
 
       /* ==============================  注入 content script , 获取 复制的文本 - Start ============================== */
       const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -40,13 +37,6 @@ const handleMenusEvent = async (info: chrome.contextMenus.OnClickData, tab?: chr
         console.log(`[yanle] - e`, e);
       }
 
-      if (isEmpty(userInfo?.data?.user_name)) {
-        // 用户没有登录
-        console.log(`[yanle] - 没有登录`);
-      } else {
-        console.log(`[yanle] - user_info`, userInfo?.data?.user_name);
-      }
-
       // 保存 图片 url 链接
       let saveImg;
       try {
@@ -63,8 +53,6 @@ const handleMenusEvent = async (info: chrome.contextMenus.OnClickData, tab?: chr
       } catch (e) {
         console.log(`[yanle] - save url error`, e);
       }
-
-      console.log(`[yanle] - saveImg`, saveImg);
 
       return;
     }

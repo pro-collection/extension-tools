@@ -12,7 +12,6 @@ import { INTERCEPT_MODIFY_HEADERS } from "./handleBeforeSendHeaders/consts";
  */
 export const handleRuntimeListener = (request: any, message: any, sendResponse: any) => {
   const { action, actionType, urls } = request || {};
-  console.log(`[yanle] - request`, request);
 
   // 事件分发
   switch (actionType) {
