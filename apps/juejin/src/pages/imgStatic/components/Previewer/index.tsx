@@ -16,7 +16,7 @@ import Bricks from "bricks.js";
  * @returns
  */
 const Previewer: FC<PreviewerProps> = (props) => {
-  const { imgStatic, imgWidth = 260 } = props;
+  const { imgStatic } = props;
 
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -46,6 +46,7 @@ const Previewer: FC<PreviewerProps> = (props) => {
       { columns: 2, gutter: 10 },
       { mq: "768px", columns: 3, gutter: 25 },
       { mq: "1024px", columns: 4, gutter: 50 },
+      { mq: "1400px", columns: 5, gutter: 30 },
     ];
 
     const instance = Bricks({
@@ -71,9 +72,9 @@ const Previewer: FC<PreviewerProps> = (props) => {
         >
           {map(imgStatic, ({ name, url }) => (
             <div className="flex justify-start flex-col">
-              <Image width={imgWidth} src={url} />
+              <Image width={260} src={url} />
 
-              <Flex className="mt-1" style={{ width: imgWidth }} wrap={"wrap"} gap="small">
+              <Flex className="mt-1" style={{ width: 260 }} wrap={"wrap"} gap="small">
                 <Tooltip placement="top" title={"复制链接"}>
                   <Button icon={<CopyOutlined />} size="small" onClick={handleCopy(url)} />
                 </Tooltip>
