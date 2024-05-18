@@ -1,7 +1,21 @@
-import { find, forEach, get, map } from "lodash";
+import { find, flatMap, forEach, get, includes, map } from "lodash";
 // import getUrlParams from "./getUrlParams";
 import fetchGetContent from "./fetchGetContent";
 import parseDraftContent from "./parseDraftContent";
+import { INTERCEPT_MODIFY_HEADERS } from "../handleBeforeSendHeaders/consts";
+import { deferredWithDraft } from "./utils";
+
+let tabCount = 0;
+let completeCount = 0;
+
+const listenerFunction = (details: any) => {
+  if (includes(details?.url, "https://api.juejin.cn/content_api/v1/article_draft/detail")) {
+    completeCount = completeCount + 1;
+    if (completeCount === tabCount) {
+      deferredWithDraft?.resolve?.();
+    }
+  }
+};
 
 /**
  *
@@ -20,6 +34,26 @@ const getDraftContent = async (urls: string[]) => {
     width: 200,
   });
 
+  tabCount = urls.length;
+
+  chrome.webRequest.onCompleted.addListener(
+    listenerFunction,
+    {
+      // 处理拦截的请求
+      urls: flatMap(map(INTERCEPT_MODIFY_HEADERS, (item) => item.inspectUrls)),
+      windowId: win?.id,
+    } as any,
+    ["extraHeaders"]
+  );
+
+  // 超时时间
+  setTimeout(() => {
+    deferredWithDraft?.resolve?.();
+  }, 7 * 1000);
+
+  // 等待监听返回
+  await deferredWithDraft?.promise;
+
   const getContentList: Promise<any>[] = [];
   forEach(win?.tabs, (tab) => {
     getContentList.push(
@@ -35,22 +69,29 @@ const getDraftContent = async (urls: string[]) => {
 
   const res = await Promise.all(getContentList);
 
-  await chrome.windows.remove(win?.id as number);
+  console.log(`[yanle] - res`, res);
 
-  const mapInfo = map(res, (item) => {
-    const pageTitle = get(item, "data.article_draft.title", "");
-    const pageId = get(item, "data.article_draft.id", "");
+  // 关闭
+  // await chrome.windows.remove(win?.id as number);
 
-    const imgStatic = parseDraftContent(get(item, "data.article_draft.mark_content", ""));
+  // const mapInfo = map(res, (item) => {
+  //   const pageTitle = get(item, "data.article_draft.title", "");
+  //   const pageId = get(item, "data.article_draft.id", "");
 
-    return {
-      pageTitle,
-      pageId,
-      imgStatic,
-    };
-  });
+  //   const imgStatic = parseDraftContent(get(item, "data.article_draft.mark_content", ""));
 
-  return mapInfo;
+  //   return {
+  //     pageTitle,
+  //     pageId,
+  //     imgStatic,
+  //   };
+  // });
+
+  chrome.webRequest.onCompleted.removeListener(listenerFunction);
+  tabCount = 0;
+  completeCount = 0;
+
+  return res;
 };
 
 export default getDraftContent;

@@ -2,6 +2,8 @@ import { readRunner, readUpdater } from "@src/background/focusRead";
 import { ActionType } from "@src/consts";
 import copyRunner from "./copy";
 import getDraftContent from "./getDraftContent";
+import { flatMap, map } from "lodash";
+import { INTERCEPT_MODIFY_HEADERS } from "./handleBeforeSendHeaders/consts";
 
 /**
  * 运行时 事件接收器
@@ -22,9 +24,11 @@ export const handleRuntimeListener = (request: any, message: any, sendResponse: 
       });
     case ActionType.imgStatic2background.injectIframe:
       {
-        getDraftContent(["https://juejin.cn/editor/drafts/7297130301288923171"]).then((res) =>
-          sendResponse(res)
-        );
+        getDraftContent([
+          "https://juejin.cn/editor/drafts/7297130301288923171",
+          "https://juejin.cn/editor/drafts/7369868541934764047",
+        ]).then((res) => sendResponse(res));
+
         break;
       }
       break;

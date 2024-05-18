@@ -24,7 +24,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
     // 处理拦截的请求
     urls: flatMap(map(INTERCEPT_MODIFY_HEADERS, (item) => item.inspectUrls)),
   },
-  ["extraHeaders", "requestHeaders"]
+  ["extraHeaders"]
 );
 
 /**

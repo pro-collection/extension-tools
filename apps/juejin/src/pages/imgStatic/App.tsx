@@ -63,10 +63,10 @@ const App: React.FC = () => {
         setUrls(imgBaseUrlList);
 
         // 通过插件来获取静态图片的
-        // const result = await chrome.runtime.sendMessage({
-        //   actionType: ActionType.imgStatic2background.injectIframe,
-        //   urls: imgBaseUrlList,
-        // });
+        const result = await chrome.runtime.sendMessage({
+          actionType: ActionType.imgStatic2background.injectIframe,
+          urls: imgBaseUrlList,
+        });
 
         // console.log(`[yanle] - result`, result);
 
