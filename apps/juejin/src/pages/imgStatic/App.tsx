@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import "@src/popup/listener";
 import "./style.css";
-import { Tabs, Spin, Image, Button, Flex } from "antd";
+import { Tabs, Spin, Image, Button, Flex, Input, InputNumber } from "antd";
 import type { TabsProps } from "antd";
 import EditButtonAndModal from "./components/EditButtonAndModal";
 import { ActionType, StorageKey } from "@src/consts";
-import { divide, isEmpty, map } from "lodash";
+import { divide, get, isEmpty, map, toNumber } from "lodash";
 import { SearchOutlined, ToolFilled } from "@ant-design/icons";
 import Previewer from "./components/Previewer";
 
 const App: React.FC = () => {
   const [urls, setUrls] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  const [imgWidth, setImgWidth] = useState(260);
 
   // 主要数据
   const [imgStatics, setImgStatics] = useState<TabsProps["items"]>([]);
@@ -64,7 +65,27 @@ const App: React.FC = () => {
     <div className="w-[100vw]" id="container">
       <header className="flex items-center justify-between p-5">
         <span className="text-3xl">掘金图床</span>
-        <EditButtonAndModal runner={runner} setUrls={setUrls} urls={urls} />
+        <div>
+          <InputNumber
+            onPressEnter={(event) => {
+              const imgWidth = toNumber(get(event, "target.value"));
+
+              setImgStatics(
+                map(imgStatics, (item) => {
+                  return {
+                    ...item,
+                    children: React.cloneElement(item?.children as ReactElement, {
+                      imgWidth,
+                    }),
+                  };
+                })
+              );
+            }}
+            className="w-[300px]"
+            placeholder={"图片缩略图大小,  enter 确认， 默认 260"}
+          />
+          <EditButtonAndModal runner={runner} setUrls={setUrls} urls={urls} />
+        </div>
       </header>
 
       <Spin spinning={loading}>

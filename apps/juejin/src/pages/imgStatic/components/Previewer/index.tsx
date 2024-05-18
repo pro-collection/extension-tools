@@ -1,14 +1,15 @@
 import React, { FC } from "react";
 import { Image, Button, Flex, message } from "antd";
 import { map } from "lodash";
+import { PreviewerProps } from "./interface";
 
 /**
  * 预览
  * @param props
  * @returns
  */
-const Previewer: FC<{ imgStatic: { name: string; url: string }[] }> = (props) => {
-  const { imgStatic } = props;
+const Previewer: FC<PreviewerProps> = (props) => {
+  const { imgStatic, imgWidth = 260 } = props;
 
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -44,7 +45,7 @@ const Previewer: FC<{ imgStatic: { name: string; url: string }[] }> = (props) =>
         >
           {map(imgStatic, ({ name, url }) => (
             <div className="flex justify-start flex-col">
-              <Image width={260} src={url} />
+              <Image width={imgWidth} src={url} />
 
               <Flex className="mt-1" wrap={"wrap"} gap="small">
                 <Button size="small" onClick={handleCopy(url)}>

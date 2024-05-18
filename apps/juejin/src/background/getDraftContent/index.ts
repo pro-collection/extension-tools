@@ -4,6 +4,13 @@ import fetchGetContent from "./fetchGetContent";
 import { INTERCEPT_MODIFY_HEADERS } from "../handleBeforeSendHeaders/consts";
 import Deferred from "@src/utils/deferred";
 
+const sleep = (time?: number) =>
+  new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(null);
+    }, time || 500);
+  });
+
 let tabCount = 0;
 let completeCount = 0;
 
@@ -56,6 +63,9 @@ const getDraftContent = async (urls: string[]) => {
 
   // 等待监听返回
   await deferredWithDraft?.promise;
+
+  // 等待一个渲染时间
+  await sleep();
 
   const getContentList: Promise<any>[] = [];
   forEach(win?.tabs, (tab) => {
