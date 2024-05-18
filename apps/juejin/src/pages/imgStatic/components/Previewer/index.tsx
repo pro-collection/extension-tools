@@ -1,7 +1,14 @@
-import React, { FC } from "react";
-import { Image, Button, Flex, message } from "antd";
+import React, { FC, useEffect, useLayoutEffect } from "react";
+import { Image, Button, Flex, message, Tooltip } from "antd";
 import { map } from "lodash";
 import { PreviewerProps } from "./interface";
+import {
+  CloudDownloadOutlined,
+  CopyOutlined,
+  DownloadOutlined,
+  FileMarkdownOutlined,
+} from "@ant-design/icons";
+import Bricks from "bricks.js";
 
 /**
  * 预览
@@ -33,10 +40,29 @@ const Previewer: FC<PreviewerProps> = (props) => {
     });
   };
 
+  useLayoutEffect(() => {
+    console.log(`[yanle] - imgStatic`, imgStatic);
+    const sizes = [
+      { columns: 2, gutter: 10 },
+      { mq: "768px", columns: 3, gutter: 25 },
+      { mq: "1024px", columns: 4, gutter: 50 },
+    ];
+
+    const instance = Bricks({
+      sizes: sizes,
+      container: "#img-bricks-container",
+      packed: "data-packed",
+    });
+
+    setTimeout(() => {
+      instance.pack().resize(true);
+    });
+  }, [imgStatic]);
+
   return (
     <>
       {contextHolder}
-      <div className="flex items-center gap-2 flex-wrap">
+      <div id="img-bricks-container" className="flex items-center gap-2 flex-wrap">
         <Image.PreviewGroup
           preview={{
             onChange: (current, prev) =>
@@ -47,14 +73,18 @@ const Previewer: FC<PreviewerProps> = (props) => {
             <div className="flex justify-start flex-col">
               <Image width={imgWidth} src={url} />
 
-              <Flex className="mt-1" wrap={"wrap"} gap="small">
-                <Button size="small" onClick={handleCopy(url)}>
-                  复制
-                </Button>
-                <Button size="small" onClick={handleCopyWithMarkdown(name, url)}>
-                  复制 Markdown 链接
-                </Button>
-                <Button size="small">
+              <Flex className="mt-1" style={{ width: imgWidth }} wrap={"wrap"} gap="small">
+                <Tooltip placement="top" title={"复制链接"}>
+                  <Button icon={<CopyOutlined />} size="small" onClick={handleCopy(url)} />
+                </Tooltip>
+                <Tooltip placement="top" title={"复制 Markdown 链接"}>
+                  <Button
+                    icon={<FileMarkdownOutlined />}
+                    size="small"
+                    onClick={handleCopyWithMarkdown(name, url)}
+                  />
+                </Tooltip>
+                <Button icon={<CloudDownloadOutlined />} size="small">
                   <a href={url} download={name}>
                     下载
                   </a>
