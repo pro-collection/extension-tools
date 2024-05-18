@@ -42,6 +42,8 @@ const EditButtonAndModal: FC<EditButtonAndModalProps> = (props) => {
       const { links } = await form?.validateFields();
       setUrls(links);
 
+      handleCancel();
+
       // 保存到 本地；
       await chrome.storage.local.set({ [StorageKey.imgBaseUrlList]: links });
 
@@ -49,7 +51,6 @@ const EditButtonAndModal: FC<EditButtonAndModalProps> = (props) => {
     } catch (e) {
       console.log(`[yanle] - 表单校验错误`, e);
     }
-    handleCancel();
   };
 
   const handleCancel = () => {
@@ -89,6 +90,13 @@ const EditButtonAndModal: FC<EditButtonAndModalProps> = (props) => {
                 validator: async (_, links) => {
                   if (!links || links.length < 1) {
                     return Promise.reject(new Error("至少要有一个链接地址"));
+                  }
+                },
+              },
+              {
+                validator: async (_, links) => {
+                  if (new Set(links).size !== links.length) {
+                    return Promise.reject(new Error("存在重复的链接， 请勿重复"));
                   }
                 },
               },

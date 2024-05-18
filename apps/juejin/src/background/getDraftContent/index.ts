@@ -1,9 +1,7 @@
 import { find, flatMap, forEach, get, includes, map } from "lodash";
 // import getUrlParams from "./getUrlParams";
 import fetchGetContent from "./fetchGetContent";
-import parseDraftContent from "./parseDraftContent";
 import { INTERCEPT_MODIFY_HEADERS } from "../handleBeforeSendHeaders/consts";
-import { deferredWithDraft } from "./utils";
 import Deferred from "@src/utils/deferred";
 
 let tabCount = 0;
