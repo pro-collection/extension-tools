@@ -4,11 +4,12 @@ import fetchGetContent from "./fetchGetContent";
 import parseDraftContent from "./parseDraftContent";
 import { INTERCEPT_MODIFY_HEADERS } from "../handleBeforeSendHeaders/consts";
 import { deferredWithDraft } from "./utils";
+import Deferred from "@src/utils/deferred";
 
 let tabCount = 0;
 let completeCount = 0;
 
-const listenerFunction = (details: any) => {
+const listenerFunctionWrapper = (deferredWithDraft: any) => (details: any) => {
   if (includes(details?.url, "https://api.juejin.cn/content_api/v1/article_draft/detail")) {
     completeCount = completeCount + 1;
     if (completeCount === tabCount) {
@@ -35,6 +36,10 @@ const getDraftContent = async (urls: string[]) => {
   });
 
   tabCount = urls.length;
+
+  const deferredWithDraft = Deferred();
+
+  const listenerFunction = listenerFunctionWrapper(deferredWithDraft);
 
   chrome.webRequest.onCompleted.addListener(
     listenerFunction,

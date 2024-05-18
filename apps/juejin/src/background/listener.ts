@@ -11,7 +11,8 @@ import { INTERCEPT_MODIFY_HEADERS } from "./handleBeforeSendHeaders/consts";
  * @returns
  */
 export const handleRuntimeListener = (request: any, message: any, sendResponse: any) => {
-  const { action, actionType } = request || {};
+  const { action, actionType, urls } = request || {};
+  console.log(`[yanle] - request`, request);
 
   // 事件分发
   switch (actionType) {
@@ -24,11 +25,7 @@ export const handleRuntimeListener = (request: any, message: any, sendResponse: 
       });
     case ActionType.imgStatic2background.injectIframe:
       {
-        getDraftContent([
-          "https://juejin.cn/editor/drafts/7297130301288923171",
-          "https://juejin.cn/editor/drafts/7369868541934764047",
-        ]).then((res) => sendResponse(res));
-
+        getDraftContent(urls).then((res) => sendResponse(res));
         break;
       }
       break;

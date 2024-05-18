@@ -35,7 +35,7 @@ const Previewer: FC<{ imgStatic: { name: string; url: string }[] }> = (props) =>
   return (
     <>
       {contextHolder}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 flex-wrap">
         <Image.PreviewGroup
           preview={{
             onChange: (current, prev) =>

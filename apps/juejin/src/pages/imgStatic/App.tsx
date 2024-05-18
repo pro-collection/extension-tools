@@ -68,9 +68,7 @@ const App: React.FC = () => {
           urls: imgBaseUrlList,
         });
 
-        // console.log(`[yanle] - result`, result);
-
-        const statics: TabsProps["items"] = map(mock, (item) => {
+        const statics: TabsProps["items"] = map(result, (item) => {
           return {
             key: item.pageId,
             label: item.pageTitle,
@@ -79,8 +77,6 @@ const App: React.FC = () => {
         });
 
         setImgStatics(statics);
-
-        // console.log(`[yanle] - result`, result);
       } else {
         setImgStatics([]);
       }
