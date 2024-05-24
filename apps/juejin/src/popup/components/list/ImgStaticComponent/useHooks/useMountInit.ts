@@ -38,7 +38,6 @@ const useMountInit = () => {
         console.log(`[yanle] - e`, e);
       }
 
-      console.log(`[yanle] - uesrinfo`, userInfo);
       setLoading(false);
       setUser({
         userName: get(userInfo, "data.user_name", ""),

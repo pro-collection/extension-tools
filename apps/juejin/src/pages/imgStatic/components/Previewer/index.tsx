@@ -41,7 +41,6 @@ const Previewer: FC<PreviewerProps> = (props) => {
   };
 
   useLayoutEffect(() => {
-    console.log(`[yanle] - imgStatic`, imgStatic);
     const sizes = [
       { columns: 2, gutter: 10 },
       { mq: "768px", columns: 3, gutter: 25 },
