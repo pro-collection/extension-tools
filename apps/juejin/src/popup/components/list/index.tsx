@@ -1,11 +1,8 @@
-import { Button, List, Switch, notification } from "antd";
-import React, { FC, useEffect, useState } from "react";
-import { CopyOutlined } from "@ant-design/icons";
-import hanldeClickCopy from "./helper/handleClickCopy";
-import handleSwitch from "./helper/handleSwitch";
-import { StorageKey } from "@src/consts";
+import { List } from "antd";
+import React, { FC } from "react";
 import SwitchComponent from "./SwitchComponent";
 import CopyButtonComponent from "./CopyButtonComponent";
+import ImgStaticComponent from "./ImgStaticComponent";
 
 const ListCompoennts: FC = () => {
   return (
@@ -23,15 +20,7 @@ const ListCompoennts: FC = () => {
           },
           {
             label: "图床",
-            actions: [
-              <Button
-                onClick={() => {
-                  window.open("chrome-extension://nepbnjgiiihmemlfldbncfelglceibnh/pages/imgStatic/index.html");
-                }}
-              >
-                跳转
-              </Button>,
-            ],
+            actions: [<ImgStaticComponent />],
           },
         ]}
         renderItem={(item) => <List.Item actions={item.actions}>{item.label}</List.Item>}
