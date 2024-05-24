@@ -5,18 +5,12 @@ import React, { FC, useEffect, useState } from "react";
 import { Spin } from "antd";
 import useMountInit from "./useHooks/useMountInit";
 
+/**
+ * 是否可以进入图床
+ * @returns
+ */
 const ImgStaticComponent: FC = () => {
-  const [user, setUser] = useState({ userName: "", id: "" });
-  const [loading, setLoading] = useState(true);
-
-  // urls
-  const [urls, setUrls] = useState<string[]>([]);
-
-  useMountInit({
-    setUrls,
-    setLoading,
-    setUser,
-  });
+  const { loading, urls, user } = useMountInit();
 
   return (
     <Spin spinning={loading}>
@@ -57,7 +51,11 @@ const ImgStaticComponent: FC = () => {
           </div>
         </div>
       ) : (
-        <span>请先登录掘金</span>
+        <Button type="link">
+          <a href="https://juejin.cn/" target="_blank">
+            请先登录掘金
+          </a>
+        </Button>
       )}
     </Spin>
   );

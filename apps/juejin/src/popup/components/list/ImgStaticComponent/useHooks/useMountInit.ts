@@ -1,10 +1,17 @@
 import { get, isEmpty } from "lodash";
-import { useEffect } from "react";
-import { UseMountInitOptions } from "../interface";
+import { useEffect, useState } from "react";
 import { StorageKey } from "@src/consts";
 
-const useMountInit = (options: UseMountInitOptions) => {
-  const { setLoading, setUrls, setUser } = options;
+/**
+ * 初始化， 判定用户是否登录， 判定是否有图床链接
+ * @returns
+ */
+const useMountInit = () => {
+  const [user, setUser] = useState({ userName: "", id: "" });
+  const [loading, setLoading] = useState(true);
+  // urls
+  const [urls, setUrls] = useState<string[]>([]);
+
   useEffect(() => {
     setLoading(true);
     const init = async () => {
@@ -41,6 +48,12 @@ const useMountInit = (options: UseMountInitOptions) => {
 
     init();
   }, []);
+
+  return {
+    user,
+    loading,
+    urls,
+  };
 };
 
 export default useMountInit;
