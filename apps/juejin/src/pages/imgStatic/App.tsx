@@ -1,12 +1,11 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "@src/popup/listener";
 import "./style.css";
-import { Tabs, Spin, Image, Button, Flex, Input, InputNumber } from "antd";
+import { Tabs, Spin } from "antd";
 import type { TabsProps } from "antd";
 import EditButtonAndModal from "./components/EditButtonAndModal";
 import { ActionType, StorageKey } from "@src/consts";
-import { divide, get, isEmpty, map, toNumber } from "lodash";
-import { SearchOutlined, ToolFilled } from "@ant-design/icons";
+import { isEmpty, map } from "lodash";
 import Previewer from "./components/Previewer";
 import { mock } from "./mock";
 
@@ -30,14 +29,12 @@ const App: React.FC = () => {
         setUrls(imgBaseUrlList);
 
         // 通过插件来获取静态图片的
-        // const result = await chrome.runtime.sendMessage({
-        //   actionType: ActionType.imgStatic2background.injectIframe,
-        //   urls: imgBaseUrlList,
-        // });
+        const result = await chrome.runtime.sendMessage({
+          actionType: ActionType.imgStatic2background.injectIframe,
+          urls: imgBaseUrlList,
+        });
 
-        // console.log(`[yanle] - result`, result);
-
-        const statics: TabsProps["items"] = map(mock, (item) => {
+        const statics: TabsProps["items"] = map(result, (item) => {
           return {
             key: item.pageId,
             label: item.pageTitle,
@@ -73,7 +70,7 @@ const App: React.FC = () => {
 
       <Spin spinning={loading}>
         <div className="p-5">
-          <Tabs defaultActiveKey="1" items={imgStatics} />
+          <Tabs destroyInactiveTabPane defaultActiveKey="1" items={imgStatics} />
         </div>
       </Spin>
     </div>
