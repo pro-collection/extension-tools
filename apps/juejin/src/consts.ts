@@ -1,4 +1,4 @@
-export const ExtensionId = "nepbnjgiiihmemlfldbncfelglceibnh";
+export const ExtensionId = "bhhfofpcngphanfejfkbojbgcfhijnca";
 
 /**
  * 用于触发事件的 动作类型， 让可以知道这个动作是谁触发的
