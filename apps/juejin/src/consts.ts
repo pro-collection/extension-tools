@@ -1,4 +1,4 @@
-export const ExtensionId = "nepbnjgiiihmemlfldbncfelglceibnh";
+export const ExtensionId = "bhhfofpcngphanfejfkbojbgcfhijnca";
 
 /**
  * 用于触发事件的 动作类型， 让可以知道这个动作是谁触发的
@@ -13,6 +13,14 @@ export const ActionType = {
     copy: "content2pupup - injectContentScripts - content.index.js",
   },
   content2pupup: {},
+  background2pupup: {
+    // 触发 contextMenus 图片点击
+    contextMenuWithImage: "background2pupup - contextMenus - image",
+  },
+
+  imgStatic2background: {
+    injectIframe: "imgStatic2background - injectIframe - script",
+  },
 };
 
 /**
@@ -30,6 +38,7 @@ export enum Action {
  */
 export const StorageKey = {
   focusReadStatus: "focusReadStatus", // 掘金文章阅读的状态
+  imgBaseUrlList: "imgBaseUrlList",
 };
 
 /**

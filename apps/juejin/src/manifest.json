@@ -2,21 +2,34 @@
   "manifest_version": 3,
   "name": "juejin tools",
   "description": "juejin 工具库扩展程序",
-  "version": "1.1",
+  "version": "1.2",
   "action": {
-    "default_icon": "images/icon.png",
+    "default_icon": "icons/icon.png",
     "default_popup": "popup/index.html"
   },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlcEgvhyh6DvbV9FO0aytj/RNiEwNrsUoDaToE5L35O2rOUCkpyxJifk2BUs6rbTBv9EkzWd0UWxndk6lR41jxG2Mmm4jz2qV/5AGkoTz/NhRO/y0TaK0q6rr7PPbIwx0jbA0II+bL5J+woqs0j3EvDFwGLeggBSqZqmbc+46W4uvH5yBaxndTMT+SgqW8P9D1riXy+6dJIsNeMLGhDGPjwv86+UR3GDlW2/+M3Vfxnrbmmo3DFc2kXwupvgN2U+BkfssKSZhWxVXRCPhM8k4vksNrrKtpOw4JTahpVevA2hl6N9YgUcGjWZe+g13u8mLekW+EHoAe2dULF9o9vmOAQIDAQAB",
   "icons": {
-    "16": "images/icon.png",
-    "32": "images/icon.png",
-    "48": "images/icon.png",
-    "128": "images/icon.png"
+    "16": "icons/icon.png",
+    "32": "icons/icon.png",
+    "48": "icons/icon.png",
+    "128": "icons/icon.png"
   },
+
   "background": {
     "service_worker": "background/index.js",
     "type": "module"
   },
-  "host_permissions": ["http://*/*", "https://*/*"],
-  "permissions": ["activeTab", "scripting", "storage", "clipboardWrite", "tabs", "userScripts", "notifications"]
+  "host_permissions": ["http://*/*", "https://*/*", "*://*/*"],
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "clipboardWrite",
+    "tabs",
+    "userScripts",
+    "notifications",
+    "webRequest",
+    "contextMenus",
+    "cookies"
+  ]
 }

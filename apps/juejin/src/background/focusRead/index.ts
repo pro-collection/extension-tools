@@ -1,9 +1,15 @@
-import { Action, ActionType, AssetPaths, InjectCssStatusList, Pages, StorageKey } from "@src/consts";
+import {
+  Action,
+  ActionType,
+  AssetPaths,
+  InjectCssStatusList,
+  Pages,
+  StorageKey,
+} from "@src/consts";
 import { filter, forEach, get, includes, isEmpty, map } from "lodash";
 
 const getPostTabs = async () => {
   const tabs = await chrome.tabs.query({});
-  console.log(`[yanle] - tabs`, tabs);
   return filter(tabs, (item) => includes(item.url, Pages.post));
 };
 
@@ -40,11 +46,8 @@ export const readRunner = async (action: Action) => {
 
   const list: Promise<any>[] = [];
 
-  console.log(`[yanle] - readRunner tabs`, tabs);
-
   forEach(tabs, (item) => {
     if (action === Action.injectCSS) {
-      console.log(`[yanle] - inject`, item?.id);
       list.push(
         chrome.scripting.insertCSS({
           files: [AssetPaths.focusModeCSS],
@@ -52,7 +55,6 @@ export const readRunner = async (action: Action) => {
         })
       );
     } else {
-      console.log(`[yanle] - remove`, item?.id);
       list.push(
         chrome.scripting.removeCSS({
           files: [AssetPaths.focusModeCSS],

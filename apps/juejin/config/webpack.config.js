@@ -14,6 +14,8 @@ module.exports = {
     ["background/index"]: "./src/background/index.ts",
     ["popup/index"]: "./src/popup/index.tsx",
 
+    ["pages/imgStatic/index"]: "./src/pages/imgStatic/index.tsx",
+
     // 内容脚本
     // 动态注入 内容脚本， 不需要静态注入， 没有意义。
     // ["contents/index"]: "./src/contents/index.ts",
@@ -125,7 +127,7 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         { from: "src/manifest.json", to: path.resolve(__dirname, "../dist") },
-        { from: path.resolve(__dirname, "../src/images"), to: path.resolve(__dirname, "../dist/images") },
+        { from: path.resolve(__dirname, "../src/icons"), to: path.resolve(__dirname, "../dist/icons") },
         { from: path.resolve(__dirname, "../src/style"), to: path.resolve(__dirname, "../dist/style") },
       ],
     }),
@@ -133,6 +135,11 @@ module.exports = {
       template: path.resolve(__dirname, "../src/popup/index.html"), // 使用自定义模板
       filename: "popup/index.html",
       chunks: ["popup/index"],
+    }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, "../src/pages/imgStatic/index.html"), // 使用自定义模板
+      filename: "pages/imgStatic/index.html",
+      chunks: ["pages/imgStatic/index"],
     }),
     new MiniCssExtractPlugin({
       filename: "style/[hash:8].css", // 将css单独提测出来放在assets/css 下

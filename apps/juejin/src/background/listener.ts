@@ -1,6 +1,9 @@
 import { readRunner, readUpdater } from "@src/background/focusRead";
 import { ActionType } from "@src/consts";
 import copyRunner from "./copy";
+import getDraftContent from "./getDraftContent";
+import { flatMap, map } from "lodash";
+import { INTERCEPT_MODIFY_HEADERS } from "./handleBeforeSendHeaders/consts";
 
 /**
  * 运行时 事件接收器
@@ -8,7 +11,7 @@ import copyRunner from "./copy";
  * @returns
  */
 export const handleRuntimeListener = (request: any, message: any, sendResponse: any) => {
-  const { action, actionType } = request || {};
+  const { action, actionType, urls } = request || {};
 
   // 事件分发
   switch (actionType) {
@@ -19,6 +22,11 @@ export const handleRuntimeListener = (request: any, message: any, sendResponse: 
       copyRunner().then((res) => {
         sendResponse(res);
       });
+    case ActionType.imgStatic2background.injectIframe:
+      {
+        getDraftContent(urls).then((res) => sendResponse(res));
+        break;
+      }
       break;
     default:
       break;
@@ -33,17 +41,10 @@ export const handleRuntimeListener = (request: any, message: any, sendResponse: 
  * @param changeInfo
  * @param tab
  */
-export const handleUpdatedListener = async (tabId: number, changeInfo: object, tab: chrome.tabs.Tab) => {
-  // console.log(`[yanle] - navigator.clipboard`, navigator?.clipboard?.writeText);
-  // 看看是否有复制能力？
-  // navigator.clipboard
-  //   .writeText("我只是测试复制内容出来")
-  //   .then((res) => {
-  //     console.log(`[yanle] - res`, res);
-  //   })
-  //   .catch((e) => {
-  //     console.log(`[yanle] - e`, e);
-  //   });
-
+export const handleUpdatedListener = async (
+  tabId: number,
+  changeInfo: object,
+  tab: chrome.tabs.Tab
+) => {
   readUpdater(tabId, changeInfo, tab);
 };
