@@ -1,4 +1,4 @@
-import { StorageKey } from "@src/consts";
+import { ExtensionId, StorageKey } from "@src/consts";
 import { Button } from "antd";
 import { get, isEmpty, map } from "lodash";
 import React, { FC, useEffect, useState } from "react";
@@ -28,9 +28,7 @@ const ImgStaticComponent: FC = () => {
             <Button
               type="link"
               onClick={() => {
-                window.open(
-                  "chrome-extension://nepbnjgiiihmemlfldbncfelglceibnh/pages/imgStatic/index.html"
-                );
+                window.open(`chrome-extension://${ExtensionId}/pages/imgStatic/index.html`);
               }}
             >
               跳转图库

@@ -1,5 +1,5 @@
-import React, { FC, useEffect, useLayoutEffect } from "react";
-import { Image, Button, Flex, message, Tooltip } from "antd";
+import React, { FC, useEffect, useLayoutEffect, useState } from "react";
+import { Image, Button, Flex, message, Tooltip, Spin } from "antd";
 import { map } from "lodash";
 import { PreviewerProps } from "./interface";
 import {
@@ -19,6 +19,8 @@ const Previewer: FC<PreviewerProps> = (props) => {
   const { imgStatic } = props;
 
   const [messageApi, contextHolder] = message.useMessage();
+
+  const [loading, setLoading] = useState(true);
 
   // 复制链接
   const handleCopy = (url: string) => () => {
@@ -54,13 +56,15 @@ const Previewer: FC<PreviewerProps> = (props) => {
       packed: "data-packed",
     });
 
+    setLoading(true);
     setTimeout(() => {
       instance.pack().resize(true);
-    });
+      setLoading(false);
+    }, 300);
   }, [imgStatic]);
 
   return (
-    <>
+    <Spin spinning={loading}>
       {contextHolder}
       <div id="img-bricks-container" className="flex items-center gap-2 flex-wrap">
         <Image.PreviewGroup
@@ -94,7 +98,7 @@ const Previewer: FC<PreviewerProps> = (props) => {
           ))}
         </Image.PreviewGroup>
       </div>
-    </>
+    </Spin>
   );
 };
 

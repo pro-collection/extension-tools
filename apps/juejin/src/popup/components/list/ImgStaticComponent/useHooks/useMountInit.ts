@@ -15,17 +15,7 @@ const useMountInit = () => {
   useEffect(() => {
     setLoading(true);
     const init = async () => {
-      /* ==============================  获取图床列表 - Start ============================== */
-      const { imgBaseUrlList = [] } = await chrome.storage.local.get(StorageKey.imgBaseUrlList);
-
-      if (isEmpty(imgBaseUrlList)) {
-        setLoading(false);
-        return;
-      } else {
-        setUrls(imgBaseUrlList);
-      }
-      /* ==============================  获取图床列表 - End   ============================== */
-
+      // chrome-extension://bhhfofpcngphanfejfkbojbgcfhijnca/popup/index.html
       let userInfo;
       try {
         userInfo = await fetch("https://api.juejin.cn/user_api/v1/user/get", {
@@ -43,6 +33,24 @@ const useMountInit = () => {
         userName: get(userInfo, "data.user_name", ""),
         id: get(userInfo, "data.user_id", ""),
       });
+
+      /* ==============================  获取图床列表 - Start ============================== */
+      let imgBaseUrlList: string[] = [];
+      try {
+        const res = await chrome.storage.local.get(StorageKey.imgBaseUrlList);
+
+        imgBaseUrlList = res.imgBaseUrlList || [];
+      } catch (e) {
+        console.log(`[yanle] - 没有获取到图库链接`, e);
+      }
+
+      if (isEmpty(imgBaseUrlList)) {
+        setLoading(false);
+        return;
+      } else {
+        setUrls(imgBaseUrlList);
+      }
+      /* ==============================  获取图床列表 - End   ============================== */
     };
 
     init();
