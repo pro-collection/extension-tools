@@ -1,0 +1,38 @@
+{
+  // "ts-node": {
+  //   "transpileOnly": true,
+  //   "require": [
+  //     "tsconfig-paths/register"
+  //   ],
+  // },
+  "compilerOptions": {
+    // "moduleResolution": "NodeNext",
+    "target": "ES2020",
+    "module": "NodeNext",
+    "baseUrl": "./",
+    "paths": {
+      "@utils/*": [
+        "./utils/*"
+      ],
+      "@src/*": [
+        "src/*"
+      ]
+    },
+    "types": [
+      "./types/globals.d.ts",
+      "chrome-types",
+      "html-to-md",
+      "antd"
+    ],
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "jsx": "react",
+  },
+  "include": [
+    "src/**/*",
+    "config/tailwind.config.js"
+  ], // 决定哪些文件被 TypeScript 服务包含
+  "allowImportingTsExtensions": true,
+}
