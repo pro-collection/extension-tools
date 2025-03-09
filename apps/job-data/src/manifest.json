@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "job data",
+  "description": "职位行业相关数据",
+  "version": "1.0",
+  "background": {
+    "service_worker": "background/index.js",
+    "type": "module"
+  },
+  "host_permissions": ["http://*/*", "https://*/*", "*://*/*"],
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "clipboardWrite",
+    "tabs",
+    "userScripts",
+    "notifications",
+    "webRequest",
+    "contextMenus",
+    "cookies"
+  ]
+}

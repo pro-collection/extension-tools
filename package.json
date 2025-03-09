@@ -4,7 +4,7 @@
   "description": "自研 - 浏览器扩展程序工具",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "engines": {
     "node": "^16.0.0"
@@ -24,6 +24,9 @@
     "typescript-transform-paths": "^3.4.7"
   },
   "devDependencies": {
-    "chrome-types": "^0.1.281"
+    "@types/jest": "^29.5.14",
+    "chrome-types": "^0.1.281",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.6"
   }
 }
