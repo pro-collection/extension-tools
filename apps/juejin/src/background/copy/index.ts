@@ -21,42 +21,60 @@ const copyRunner = async () => {
   let markdown = "";
 
   if (articleContent) {
-    const content = h2md(articleContent);
+    markdown = generateMarkdown(articleContent, author, href);
+  }
 
-    // 写入文件
-    markdown = flow(
-      (value) => value.replace(/javascriptCopy code/gi, ""),
-      (value) => value.replace(/htmlCopy code/gi, ""),
-      (value) => value.replace(/cssCopy code/gi, ""),
-      (value) => value.replace(/jsCopy code/gi, ""),
-      (value) => value.replace(/jsonCopy code/gi, ""),
-      (value) => value.replace(/shellCopy code/gi, ""),
-      (value) => value.replace(/jsxCopy code/gi, ""),
+  return markdown;
+};
 
-      (value) => value.replace(/```js\njs/gi, "```js\n"),
-      (value) => value.replace(/```jsx\njsx/gi, "```jsx\n"),
-      (value) => value.replace(/```tsx\ntsx/gi, "```tsx\n"),
-      (value) => value.replace(/```sql\nsql/gi, "```sql\n"),
-      (value) => value.replace(/```java\njava/gi, "```java\n"),
-      (value) => value.replace(/```python\npython/gi, "```python\n"),
-      (value) => value.replace(/```go\ngo/gi, "```go\n"),
-      (value) => value.replace(/```c\nc/gi, "```c\n"),
-      (value) => value.replace(/```c\+\+\nc\+\+/gi, "```c++\n"),
-      (value) => value.replace(/```ini\nini/gi, "```ini\n"),
-      (value) => value.replace(/```json\njson/gi, "```json\n"),
-      (value) => value.replace(/```html\nhtml/gi, "```html\n"),
-      (value) => value.replace(/```csharp\ncsharp/gi, "```csharp\n"),
-      (value) => value.replace(/```javascript\njavascript/gi, "```javascript\n"),
-      (value) => value.replace(/```typescript\ntypescript/gi, "```typescript\n"),
+/**
+ * 生成 markdown
+ * @param articleContent
+ * @param author
+ * @param href
+ * @returns
+ */
+export const generateMarkdown = (articleContent: string, author: string, href: string): string => {
+  const content = h2md(articleContent);
 
-      (value) => value.replace(/\\. /gi, ". "),
-      (value) => value.replace(/\\- /gi, "- "),
-      (value) => value.replace(/复制代码/gi, ""),
-      // value => value.replace(/\n### /gi, "\n#### "),
-      (value) => value.replace(/\n## /gi, "\n### ")
-    )(content);
+  // 写入文件
+  const replaceRegexes = (content: string, regexes: [RegExp, string][]) => {
+    return regexes.reduce((acc, [regex, replacement]) => {
+      return acc.replace(regex, replacement);
+    }, content);
+  };
 
-    const desc = `> 作者：${author}               
+  const regexes: [RegExp, string][] = [
+    [/javascriptCopy code/gi, ""],
+    [/htmlCopy code/gi, ""],
+    [/cssCopy code/gi, ""],
+    [/jsCopy code/gi, ""],
+    [/jsonCopy code/gi, ""],
+    [/shellCopy code/gi, ""],
+    [/jsxCopy code/gi, ""],
+    [/```js\njs/gi, "```js\n"],
+    [/```jsx\njsx/gi, "```jsx\n"],
+    [/```tsx\ntsx/gi, "```tsx\n"],
+    [/```sql\nsql/gi, "```sql\n"],
+    [/```java\njava/gi, "```java\n"],
+    [/```python\npython/gi, "```python\n"],
+    [/```go\ngo/gi, "```go\n"],
+    [/```c\nc/gi, "```c\n"],
+    [/```c\+\+\nc\+\+/gi, "```c++\n"],
+    [/```ini\nini/gi, "```ini\n"],
+    [/```json\njson/gi, "```json\n"],
+    [/```html\nhtml/gi, "```html\n"],
+    [/```csharp\ncsharp/gi, "```csharp\n"],
+    [/```javascript\njavascript/gi, "```javascript\n"],
+    [/```typescript\ntypescript/gi, "```typescript\n"],
+    [/\\. /gi, ". "],
+    [/\\- /gi, "- "],
+    [/复制代码|代码解读/gi, ""],
+    [/\n## /gi, "\n### "],
+  ];
+
+  const markdown = replaceRegexes(content, regexes);
+  const desc = `> 作者：${author}               
 > 链接：${href}             
 > 来源：稀土掘金                  
 > 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。                    
@@ -64,10 +82,7 @@ const copyRunner = async () => {
 ---------
 
 `;
-    markdown = desc + markdown;
-  }
-
-  return markdown;
+  return desc + markdown;
 };
 
 export default copyRunner;
