@@ -1,3 +1,7 @@
+/**
+ * 扩展的唯一标识
+ * 固定值， 不可修改
+ */
 export const ExtensionId = "bhhfofpcngphanfejfkbojbgcfhijnca";
 
 /**
