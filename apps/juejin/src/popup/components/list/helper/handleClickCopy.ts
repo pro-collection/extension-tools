@@ -1,10 +1,9 @@
 import { generateMarkdown } from "@src/background/copy";
-import { ActionType } from "@src/consts";
+import { ActionType, StorageKey } from "@src/consts";
+import { getStorageItem } from "@src/popup/store";
 import { MessageInstance } from "antd/es/message/interface";
 import { load } from "cheerio";
 import { trim } from "lodash";
-
-console.log(`[yanle] - cheerio`, load);
 
 /**
  * 直接通过最近简单的获取 html 的方式来获取当前 文章内容
@@ -13,6 +12,8 @@ console.log(`[yanle] - cheerio`, load);
  */
 const hanldeClickCopy = (api: MessageInstance) => async () => {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+
+  const query = getStorageItem<string>(StorageKey.SELECTED_QUERY_SELECTOR);
   if (tab) {
     const pageUrl = tab.url as string;
     const resContent = await chrome.scripting.executeScript({
@@ -27,7 +28,8 @@ const hanldeClickCopy = (api: MessageInstance) => async () => {
     // 移除 code 块的 header
     $(".code-block-extension-header").remove();
 
-    const $article = $("#article-root");
+    const articleKey = query ? query : "#article-root";
+    const $article = $(articleKey);
     const articleContent = $article?.html() || "";
     const author = trim($(".author-info-box span.name").text());
 
