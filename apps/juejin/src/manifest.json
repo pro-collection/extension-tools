@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "juejin tools",
   "description": "juejin 工具库扩展程序",
-  "version": "1.2",
+  "version": "1.3",
   "action": {
     "default_icon": "icons/icon.png",
     "default_popup": "popup/index.html"
@@ -14,12 +14,15 @@
     "48": "icons/icon.png",
     "128": "icons/icon.png"
   },
-
   "background": {
     "service_worker": "background/index.js",
     "type": "module"
   },
-  "host_permissions": ["http://*/*", "https://*/*", "*://*/*"],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*",
+    "*://*/*"
+  ],
   "permissions": [
     "activeTab",
     "scripting",

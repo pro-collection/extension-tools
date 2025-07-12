@@ -82,7 +82,12 @@ export const generateMarkdown = (articleContent: string, author: string, href: s
 ---------
 
 `;
-  return desc + markdown;
+
+  if (author) {
+    return desc + markdown;
+  }
+
+  return markdown;
 };
 
 export default copyRunner;

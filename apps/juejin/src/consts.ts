@@ -40,10 +40,20 @@ export enum Action {
 /**
  * 存储 key
  */
-export const StorageKey = {
-  focusReadStatus: "focusReadStatus", // 掘金文章阅读的状态
-  imgBaseUrlList: "imgBaseUrlList",
-};
+export enum StorageKey {
+  /** 掘金文章阅读的状态 */
+  focusReadStatus = "focusReadStatus",
+  imgBaseUrlList = "imgBaseUrlList",
+
+  /** 查询选择器列表存储键 */
+  QUERY_SELECTORS = "querySelectors",
+  /** 当前选中的查询选择器存储键 */
+  SELECTED_QUERY_SELECTOR = "selectedQuerySelector",
+  /** 阅读模式状态存储键 */
+  READING_MODE = "readingMode",
+  /** 图片托管配置存储键 */
+  IMAGE_HOSTING_CONFIG = "imageHostingConfig",
+}
 
 /**
  * 需要插入 css 的 tabs 状态时机

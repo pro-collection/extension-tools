@@ -3,6 +3,7 @@ import React, { FC } from "react";
 import SwitchComponent from "./SwitchComponent";
 import CopyButtonComponent from "./CopyButtonComponent";
 import ImgStaticComponent from "./ImgStaticComponent";
+import QuerySelectorInput from "./CopyButtonComponent/QuerySelectorInput";
 
 const ListCompoennts: FC = () => {
   return (
@@ -17,13 +18,21 @@ const ListCompoennts: FC = () => {
           {
             label: "点击复制当前页面文章为 Markdown 文本格式",
             actions: [<CopyButtonComponent />],
+            description: <QuerySelectorInput />,
           },
           {
             label: "图床",
             actions: [<ImgStaticComponent />],
           },
         ]}
-        renderItem={(item) => <List.Item actions={item.actions}>{item.label}</List.Item>}
+        renderItem={(item) => (
+          <List.Item actions={item.actions}>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <span>{item.label}</span>
+              <span>{item.description}</span>
+            </div>
+          </List.Item>
+        )}
       />
     </div>
   );

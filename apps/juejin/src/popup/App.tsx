@@ -6,7 +6,7 @@ import { Button, Divider, Space } from "antd";
 
 const App: React.FC = () => {
   return (
-    <div className="w-[600px] p-[12px]" id="container">
+    <div className="w-[700px] p-[12px]" id="container">
       <ListCompoennts />
       <Divider orientation="left">关于作者</Divider>
       <Space>
